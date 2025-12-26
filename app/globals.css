@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===================================
+   Responsive Design - Mobile First
+   Breakpoints:
+   - Mobile: 320px+ (default)
+   - Tablet: 768px+ (md)
+   - Desktop: 1024px+ (lg)
+   =================================== */
+
+/* Mobile base styles (320px+) */
+@media (min-width: 320px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .container-responsive {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Tablet styles (768px+) */
+@media (min-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+  
+  .container-responsive {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Desktop styles (1024px+) */
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+  
+  .container-responsive {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Carousel responsive adjustments */
+.carousel-container {
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .carousel-container {
+    padding: 0 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Hide navigation arrows on mobile for better touch experience */
+@media (max-width: 767px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
+}
+
+/* Card grid responsive utilities */
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
