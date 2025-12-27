@@ -1,4 +1,4 @@
-import { getWorks, getExperiences, getSkills } from '@/lib/microcms';
+import { getWorks, getExperiences, getSkills, getSettings } from '@/lib/microcms';
 import Introduction from '@/components/sections/Introduction';
 import WorksSection from '@/components/sections/WorksSection';
 import ExperiencesSection from '@/components/sections/ExperiencesSection';
@@ -6,18 +6,34 @@ import SkillsSection from '@/components/sections/SkillsSection';
 
 export default async function Home() {
   // Fetch data from microCMS (Server Component)
-  const [works, experiences, skills] = await Promise.all([
+  const [works, experiences, skills, settings] = await Promise.all([
     getWorks(),
     getExperiences(),
     getSkills(),
+    getSettings(),
   ]);
 
   return (
     <main className="min-h-screen">
-      <Introduction />
+      <Introduction 
+        text={settings?.introductionMessage}
+        profileImage={settings?.profileImage}
+        name={settings?.name}
+        nameEn={settings?.nameEn}
+      />
       <WorksSection works={works} />
       <ExperiencesSection experiences={experiences} />
       <SkillsSection skills={skills} />
+      {settings?.detailMessage && (
+        <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20 bg-gray-50">
+          <div className="max-w-6xl mx-auto">
+            <div 
+              className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl mx-auto"
+              dangerouslySetInnerHTML={{ __html: settings.detailMessage }}
+            />
+          </div>
+        </section>
+      )}
     </main>
   );
 }
