@@ -65,13 +65,6 @@ export default function WorkCard({ work, onClick }: WorkCardProps) {
             </span>
           )}
         </div>
-
-        {/* URL (optional display) - hidden on mobile */}
-        {work.url && (
-          <div className="hidden sm:block mt-3 text-sm text-blue-600 truncate">
-            {work.url}
-          </div>
-        )}
       </div>
     </article>
   );
