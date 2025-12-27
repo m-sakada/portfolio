@@ -40,7 +40,45 @@ MICROCMS_SERVICE_DOMAIN=your-service-name
 MICROCMS_API_KEY=your-api-key
 ```
 
+**Basic認証について:**
+- 下記が設定されている場合のみ認証が有効
+
+```env
+BASIC_AUTH_USER=user-name
+BASIC_AUTH_PASSWORD=user-password
+```
+
+
 ### 3. microCMSの設定
+
+#### Settings API
+- API名: `settings`
+- 形式: オブジェクト形式
+
+| フィールドID | フィールド名 | タイプ | 必須 | 説明 |
+|-------------|-------------|--------|------|------|
+| mvImage | MV画像 | 画像 | - | OGP画像にも使用 |
+| favicon | ファビコン | 画像 | - | サイトのファビコン |
+| profileImage | 顔写真 | 画像 | - | 自己紹介セクション |
+| name | 名前 | テキストフィールド | - | サイトタイトルやメタデータにも使用 |
+| nameEn | 名前（英字） | テキストフィールド | - | 自己紹介セクション|
+| introductionMessage | 自己紹介メッセージ | テキストエリア | - | 自己紹介セクション |
+| detailMessage | 詳細メッセージ | リッチエディタ | - | TOPページのスキルセクション下の詳細エリア |
+| aboutContent | aboutページコンテンツ | リッチエディタ | - | Aboutページ用 |
+
+**設定値の使用箇所:**
+- `name`: サイトタイトル「{名前} | ポートフォリオサイト」、メタデータ
+- `nameEn`: TOPページの自己紹介セクションで名前の下に併記
+- `mvImage`: OGP画像（Twitter Card、Facebook等のシェア時に表示）
+- `favicon`: ブラウザタブのアイコン
+- `profileImage`: TOPページの自己紹介セクションの顔写真
+- `introductionMessage`: TOPページの自己紹介文
+- `detailMessage`: TOPページのスキルセクション下の詳細エリア（リッチテキスト）
+- `aboutContent`: Aboutページのコンテンツ全体
+
+**メタデータ:**
+- Title: `{名前} | ポートフォリオサイト`
+- Description: `{現在の年}年現在の{名前}のポートフォリオサイトです。経験サイト、経歴、スキルを記載しています。`
 
 #### Works API
 - API名: `works`
@@ -121,6 +159,8 @@ npm run build
 3. 環境変数を設定：
    - `MICROCMS_SERVICE_DOMAIN`
    - `MICROCMS_API_KEY`
+   - `BASIC_AUTH_USER` (Basic認証を有効にする場合)
+   - `BASIC_AUTH_PASSWORD` (Basic認証を有効にする場合)
 4. 自動デプロイが開始されます
 
 ## 技術スタック

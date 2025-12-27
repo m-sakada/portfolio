@@ -36,7 +36,7 @@ export type SkillCategory =
   | 'インフラ';
 
 // microCMS Image type
-interface MicroCMSImage {
+export interface MicroCMSImage {
   url: string;
   width: number;
   height: number;
@@ -76,4 +76,17 @@ export interface Skill {
   category: SkillCategory;          // カテゴリ
   yearsOfExperience: string;        // 経験年数
   details: string;                  // 詳細（リッチテキスト）
+}
+
+// Settings interface
+export interface Settings {
+  id: string;
+  mvImage?: MicroCMSImage;          // MV画像
+  favicon?: MicroCMSImage;          // ファビコン
+  profileImage?: MicroCMSImage;     // 顔写真
+  name?: string;                    // 名前
+  nameEn?: string;                  // 名前（英字）
+  introductionMessage?: string;     // 自己紹介メッセージ
+  detailMessage?: string;           // 詳細メッセージ（リッチテキスト）
+  aboutContent?: string;            // aboutページに表示するコンテンツ（リッチテキスト）
 }

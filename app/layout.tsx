@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { getSettings } from "@/lib/microcms";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,31 +15,51 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Portfolio | Web Developer",
-    template: "%s | Portfolio",
-  },
-  description: "Web開発者のポートフォリオサイト。実績、経歴、スキルを紹介しています。",
-  keywords: ["ポートフォリオ", "Web開発", "フロントエンド", "Next.js", "TypeScript"],
-  authors: [{ name: "Portfolio Owner" }],
-  openGraph: {
-    type: "website",
-    locale: "ja_JP",
-    siteName: "Portfolio",
-    title: "Portfolio | Web Developer",
-    description: "Web開発者のポートフォリオサイト。実績、経歴、スキルを紹介しています。",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Portfolio | Web Developer",
-    description: "Web開発者のポートフォリオサイト。実績、経歴、スキルを紹介しています。",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const currentYear = new Date().getFullYear();
+  const name = settings?.name || "Portfolio Owner";
+  const title = `${name} | ポートフォリオサイト`;
+  const description = `${currentYear}年現在の${name}のポートフォリオサイトです。経験サイト、経歴、スキルを記載しています。`;
+
+  return {
+    title: {
+      default: title,
+      template: `%s | ${name}`,
+    },
+    description,
+    authors: [{ name }],
+    icons: settings?.favicon?.url ? {
+      icon: settings.favicon.url,
+      shortcut: settings.favicon.url,
+      apple: settings.favicon.url,
+    } : undefined,
+    openGraph: {
+      type: "website",
+      locale: "ja_JP",
+      siteName: title,
+      title,
+      description,
+      images: settings?.mvImage?.url ? [
+        {
+          url: settings.mvImage.url,
+          width: settings.mvImage.width,
+          height: settings.mvImage.height,
+        }
+      ] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: settings?.mvImage?.url ? [settings.mvImage.url] : undefined,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

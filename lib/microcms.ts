@@ -1,5 +1,5 @@
 import { createClient } from 'microcms-js-sdk';
-import { Work, Experience, Skill } from './types';
+import { Work, Experience, Skill, Settings } from './types';
 
 // Initialize microCMS client
 export const client = createClient({
@@ -52,5 +52,21 @@ export async function getSkills(): Promise<Skill[]> {
   } catch (error) {
     console.error('Failed to fetch skills:', error);
     return [];
+  }
+}
+
+/**
+ * Fetch settings from microCMS
+ * Returns null on error for graceful fallback
+ */
+export async function getSettings(): Promise<Settings | null> {
+  try {
+    const response = await client.getObject<Settings>({
+      endpoint: 'settings',
+    });
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch settings:', error);
+    return null;
   }
 }
