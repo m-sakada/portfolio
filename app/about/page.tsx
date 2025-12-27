@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getSettings } from '@/lib/microcms';
+import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -55,9 +56,9 @@ export default async function AboutPage() {
         </h1>
 
         <div className="bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10">
-          <div 
+          <MicroCmsHtml 
+            html={settings?.aboutContent || defaultContent}
             className="prose prose-sm sm:prose-base md:prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: settings?.aboutContent || defaultContent }}
           />
         </div>
       </div>
