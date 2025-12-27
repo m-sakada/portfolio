@@ -1,13 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y } from 'swiper/modules';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { useKeenSlider } from 'keen-slider/react';
+import 'keen-slider/keen-slider.min.css';
 
 interface CarouselProps {
   children: React.ReactNode[];
@@ -23,46 +18,50 @@ interface CarouselProps {
 
 export default function Carousel({ 
   children, 
-  slidesPerView = 1, 
-  spaceBetween = 20,
-  breakpoints
 }: CarouselProps) {
   const [isClient, setIsClient] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [maxIdx, setMaxIdx] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    initial: 0,
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel);
+    },
+    created(slider) {
+      setLoaded(true);
+      setMaxIdx(slider.track.details.maxIdx);
+    },
+    updated(slider) {
+      setMaxIdx(slider.track.details.maxIdx);
+    },
+    slides: {
+      perView: 1,
+      spacing: 12,
+    },
+    breakpoints: {
+      '(min-width: 480px)': {
+        slides: { perView: 1.2, spacing: 16 },
+      },
+      '(min-width: 640px)': {
+        slides: { perView: 1.5, spacing: 16 },
+      },
+      '(min-width: 768px)': {
+        slides: { perView: 2, spacing: 20 },
+      },
+      '(min-width: 1024px)': {
+        slides: { perView: 3, spacing: 24 },
+      },
+      '(min-width: 1280px)': {
+        slides: { perView: 3, spacing: 30 },
+      },
+    },
+  });
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  // Responsive breakpoints for different screen sizes
-  // Mobile: 320px+ (1 slide)
-  // Tablet: 768px+ (2 slides)
-  // Desktop: 1024px+ (3 slides)
-  const defaultBreakpoints = {
-    320: {
-      slidesPerView: 1,
-      spaceBetween: 12,
-    },
-    480: {
-      slidesPerView: 1.2,
-      spaceBetween: 16,
-    },
-    640: {
-      slidesPerView: 1.5,
-      spaceBetween: 16,
-    },
-    768: {
-      slidesPerView: 2,
-      spaceBetween: 20,
-    },
-    1024: {
-      slidesPerView: 3,
-      spaceBetween: 24,
-    },
-    1280: {
-      slidesPerView: 3,
-      spaceBetween: 30,
-    },
-  };
 
   // Show a simple grid layout during SSR and hydration
   if (!isClient) {
@@ -79,62 +78,63 @@ export default function Carousel({
     );
   }
 
+  const dotCount = maxIdx + 1;
+
   return (
-    <div className="carousel-container">
-      <Swiper
-        modules={[Navigation, Pagination, A11y]}
-        spaceBetween={spaceBetween}
-        slidesPerView={slidesPerView}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
-        pagination={{
-          clickable: true,
-          el: '.swiper-pagination',
-          dynamicBullets: true,
-        }}
-        breakpoints={breakpoints || defaultBreakpoints}
-        className="w-full"
-        grabCursor={true}
-      >
+    <div className="carousel-container relative">
+      <div ref={sliderRef} className="keen-slider">
         {children.map((child, index) => (
-          <SwiperSlide key={index} className="pb-2">
+          <div key={index} className="keen-slider__slide pb-2">
             {child}
-          </SwiperSlide>
+          </div>
         ))}
-      </Swiper>
+      </div>
       
-      {/* Custom Navigation Buttons - Hidden on mobile via CSS */}
-      <div className="swiper-button-prev !text-blue-600 !w-10 !h-10 !mt-0 !top-1/2 !-translate-y-1/2 !left-0 md:!left-2 !bg-white !rounded-full !shadow-lg hover:!bg-gray-50 transition-colors after:!text-sm after:!font-bold"></div>
-      <div className="swiper-button-next !text-blue-600 !w-10 !h-10 !mt-0 !top-1/2 !-translate-y-1/2 !right-0 md:!right-2 !bg-white !rounded-full !shadow-lg hover:!bg-gray-50 transition-colors after:!text-sm after:!font-bold"></div>
+      {/* Navigation Buttons - Hidden on mobile, hidden when disabled */}
+      {loaded && (
+        <>
+          <button
+            onClick={() => instanceRef.current?.prev()}
+            disabled={currentSlide === 0}
+            className={`hidden md:flex absolute top-1/2 -translate-y-1/2 left-0 md:left-2 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all text-blue-600 ${
+              currentSlide === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+            aria-label="Previous slide"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            onClick={() => instanceRef.current?.next()}
+            disabled={currentSlide === maxIdx}
+            className={`hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 md:right-2 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all text-blue-600 ${
+              currentSlide === maxIdx ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+            aria-label="Next slide"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </>
+      )}
       
-      {/* Custom Pagination */}
-      <div className="swiper-pagination !bottom-4 !relative !mt-4 md:!mt-6"></div>
-      
-      <style jsx global>{`
-        .swiper-pagination-bullet {
-          background: #3b82f6 !important;
-          opacity: 0.3 !important;
-          width: 8px !important;
-          height: 8px !important;
-        }
-        
-        @media (min-width: 768px) {
-          .swiper-pagination-bullet {
-            width: 10px !important;
-            height: 10px !important;
-          }
-        }
-        
-        .swiper-pagination-bullet-active {
-          opacity: 1 !important;
-        }
-        
-        .swiper-button-disabled {
-          opacity: 0.3 !important;
-        }
-      `}</style>
+      {/* Pagination Dots */}
+      {loaded && dotCount > 1 && (
+        <div className="flex justify-center gap-2 mt-4 md:mt-6">
+          {[...Array(dotCount)].map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => instanceRef.current?.moveToIdx(idx)}
+              className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-opacity ${
+                currentSlide === idx ? 'bg-blue-600 opacity-100' : 'bg-blue-600 opacity-30'
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

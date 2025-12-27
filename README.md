@@ -8,7 +8,7 @@ Next.js 16.0.10 + microCMS + Vercelで構築されたポートフォリオサイ
 - **microCMS** - ヘッドレスCMSでコンテンツ管理
 - **TypeScript** - 型安全な開発
 - **Tailwind CSS** - モダンなスタイリング
-- **Swiper.js** - レスポンシブなカルーセル
+- **keen-slider** - 軽量なカルーセル
 - **Vercel** - 高速なデプロイメント
 - **Property-Based Testing** - 堅牢なテスト戦略
 
@@ -169,7 +169,7 @@ npm run build
 - **言語**: TypeScript
 - **スタイリング**: Tailwind CSS
 - **CMS**: microCMS
-- **UI**: Swiper.js (カルーセル)
+- **UI**: keen-slider (カルーセル)
 - **テスト**: Vitest + fast-check (Property-Based Testing)
 - **デプロイ**: Vercel
 

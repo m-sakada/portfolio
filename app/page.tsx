@@ -20,6 +20,7 @@ export default async function Home() {
         profileImage={settings?.profileImage}
         name={settings?.name}
         nameEn={settings?.nameEn}
+        mvImage={settings?.mvImage}
       />
       <WorksSection works={works} />
       <ExperiencesSection experiences={experiences} />
