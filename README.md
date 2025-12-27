@@ -40,6 +40,15 @@ MICROCMS_SERVICE_DOMAIN=your-service-name
 MICROCMS_API_KEY=your-api-key
 ```
 
+**Basic認証について:**
+- 下記が設定されている場合のみ認証が有効
+
+```env
+BASIC_AUTH_USER=user-name
+BASIC_AUTH_PASSWORD=user-password
+```
+
+
 ### 3. microCMSの設定
 
 #### Settings API
@@ -150,6 +159,8 @@ npm run build
 3. 環境変数を設定：
    - `MICROCMS_SERVICE_DOMAIN`
    - `MICROCMS_API_KEY`
+   - `BASIC_AUTH_USER` (Basic認証を有効にする場合)
+   - `BASIC_AUTH_PASSWORD` (Basic認証を有効にする場合)
 4. 自動デプロイが開始されます
 
 ## 技術スタック
