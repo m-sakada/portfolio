@@ -87,13 +87,7 @@ body {
   }
 }
 
-/* Hide navigation arrows on mobile for better touch experience */
-@media (max-width: 767px) {
-  .swiper-button-prev,
-  .swiper-button-next {
-    display: none !important;
-  }
-}
+
 
 /* Card grid responsive utilities */
 .card-grid {
