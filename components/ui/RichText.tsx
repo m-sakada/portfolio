@@ -1,11 +1,26 @@
+'use client';
+
+import DOMPurify from 'isomorphic-dompurify';
+
 interface RichTextProps {
   content: string;
   className?: string;
 }
 
 export default function RichText({ content, className = '' }: RichTextProps) {
-  // microCMS provides clean HTML, but we sanitize for safety
-  const sanitizedContent = content || '';
+  const sanitizedContent = DOMPurify.sanitize(content || '', {
+    ALLOWED_TAGS: [
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'p', 'br', 'hr',
+      'ul', 'ol', 'li',
+      'a', 'strong', 'em', 'u', 's', 'code', 'pre',
+      'blockquote', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
+      'img', 'figure', 'figcaption',
+      'div', 'span',
+    ],
+    ALLOWED_ATTR: ['href', 'target', 'rel', 'src', 'alt', 'width', 'height', 'class'],
+    ALLOW_DATA_ATTR: false,
+  });
 
   return (
     <>
