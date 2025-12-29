@@ -3,6 +3,7 @@ import Introduction from '@/components/sections/Introduction';
 import WorksSection from '@/components/sections/WorksSection';
 import ExperiencesSection from '@/components/sections/ExperiencesSection';
 import SkillsSection from '@/components/sections/SkillsSection';
+import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 export default async function Home() {
   // Fetch data from microCMS (Server Component)
@@ -28,9 +29,9 @@ export default async function Home() {
       {settings?.detailMessage && (
         <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto">
-            <div 
+            <MicroCmsHtml 
+              html={settings.detailMessage}
               className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl mx-auto"
-              dangerouslySetInnerHTML={{ __html: settings.detailMessage }}
             />
           </div>
         </section>
