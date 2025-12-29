@@ -38,7 +38,7 @@ export default function ExperienceItem({ experience, onClick }: ExperienceItemPr
       <div className="flex-1 min-w-0 w-full">
         {/* Company Name, Type & Duration - Single Line */}
         <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex-shrink-0">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900 flex-shrink-0">
             {experience.companyName}
           </h3>
           <span className="px-2 py-0.5 text-xs border border-gray-300 text-gray-800 rounded flex-shrink-0">
