@@ -32,8 +32,8 @@ export default function ExperiencesSection({ experiences }: ExperiencesSectionPr
           経歴
         </h2>
 
-        {/* Responsive list: single column on mobile, can expand on larger screens */}
-        <div className="space-y-3 sm:space-y-4">
+        {/* Table-style list with horizontal lines */}
+        <div className="border-t border-gray-200">
           {experiences.map((experience) => (
             <ExperienceItem
               key={experience.id}
