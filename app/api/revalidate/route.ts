@@ -1,4 +1,4 @@
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
@@ -63,12 +63,15 @@ export async function POST(request: NextRequest) {
     const pathsToRevalidate = API_PATH_MAP[api] || ['/'];
     const revalidatedPaths: string[] = [];
 
+    // microCMSデータのキャッシュタグを無効化（即時反映）
+    revalidateTag('microcms', { expire: 0 });
+
     for (const path of pathsToRevalidate) {
       revalidatePath(path);
       revalidatedPaths.push(path);
     }
 
-    console.log(`Revalidated paths: ${revalidatedPaths.join(', ')}`);
+    console.log(`Revalidated paths: ${revalidatedPaths.join(', ')} and tag: microcms`);
 
     return NextResponse.json({
       revalidated: true,
