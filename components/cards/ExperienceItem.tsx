@@ -11,7 +11,7 @@ interface ExperienceItemProps {
 export default function ExperienceItem({ experience, onClick }: ExperienceItemProps) {
   return (
     <article
-      className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+      className="flex flex-col sm:flex-row sm:items-center items-start gap-3 sm:gap-5 py-4 sm:py-5 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -24,13 +24,13 @@ export default function ExperienceItem({ experience, onClick }: ExperienceItemPr
       aria-label={`${experience.companyName}の詳細を表示`}
     >
       {/* Company Logo */}
-      <div className="relative w-24 h-12 sm:w-32 sm:h-16 flex-shrink-0">
+      <div className="relative w-20 h-10 sm:w-34 sm:h-12 flex-shrink-0">
         <Image
           src={experience.companyLogo.url}
           alt={`${experience.companyName}のロゴ`}
           fill
-          className="object-contain rounded"
-          sizes="(max-width: 640px) 96px, 128px"
+          className="object-contain"
+          sizes="(max-width: 640px) 80px, 96px"
         />
       </div>
 
@@ -41,7 +41,7 @@ export default function ExperienceItem({ experience, onClick }: ExperienceItemPr
           <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex-shrink-0">
             {experience.companyName}
           </h3>
-          <span className="px-2 py-0.5 text-xs bg-green-100 text-green-800 rounded flex-shrink-0">
+          <span className="px-2 py-0.5 text-xs border border-gray-300 text-gray-800 rounded flex-shrink-0">
             {experience.companyType}
           </span>
           <span className="text-xs sm:text-sm text-gray-500 flex-shrink-0">
