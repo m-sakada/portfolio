@@ -1,8 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
+
+// Client-side detection without useEffect
+const emptySubscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 interface CarouselProps {
   children: React.ReactNode[];
@@ -19,7 +24,7 @@ interface CarouselProps {
 export default function Carousel({ 
   children, 
 }: CarouselProps) {
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useSyncExternalStore(emptySubscribe, getClientSnapshot, getServerSnapshot);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [maxIdx, setMaxIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -59,10 +64,6 @@ export default function Carousel({
     },
   });
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   // Show a simple grid layout during SSR and hydration
   if (!isClient) {
     return (
@@ -96,7 +97,7 @@ export default function Carousel({
           <button
             onClick={() => instanceRef.current?.prev()}
             disabled={currentSlide === 0}
-            className={`hidden md:flex absolute top-1/2 -translate-y-1/2 left-0 md:left-2 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all text-blue-600 ${
+            className={`hidden md:flex absolute top-1/2 -translate-y-1/2 left-0 md:left-2 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all text-gray-600 ${
               currentSlide === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
             aria-label="Previous slide"
@@ -108,7 +109,7 @@ export default function Carousel({
           <button
             onClick={() => instanceRef.current?.next()}
             disabled={currentSlide === maxIdx}
-            className={`hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 md:right-2 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all text-blue-600 ${
+            className={`hidden md:flex absolute top-1/2 -translate-y-1/2 right-0 md:right-2 w-10 h-10 items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all text-gray-600 ${
               currentSlide === maxIdx ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
             aria-label="Next slide"
