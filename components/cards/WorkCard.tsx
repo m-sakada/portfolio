@@ -43,7 +43,7 @@ export default function WorkCard({ work, onClick }: WorkCardProps) {
 
         {/* Category & Duration */}
         <div className="flex flex-wrap items-center gap-2 mb-3 text-xs sm:text-sm text-gray-600">
-          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded whitespace-nowrap">
+          <span className="px-2 py-1 border border-gray-300 text-gray-800 rounded whitespace-nowrap">
             {work.category}
           </span>
           <span className="whitespace-nowrap">{work.duration}</span>

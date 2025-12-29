@@ -31,13 +31,13 @@ export default function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               href="/" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold"
             >
               TOP
             </Link>
             <Link 
               href="/about" 
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold"
             >
               About
             </Link>
@@ -69,14 +69,14 @@ export default function Header() {
             <div className="flex flex-col space-y-4">
               <Link 
                 href="/" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium px-2 py-1"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1"
                 onClick={closeMenu}
               >
                 TOP
               </Link>
               <Link 
                 href="/about" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-medium px-2 py-1"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1"
                 onClick={closeMenu}
               >
                 About

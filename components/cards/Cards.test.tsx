@@ -175,10 +175,11 @@ describe('Card Components Property Tests', () => {
           const jobTitleParagraph = Array.from(allParagraphs).find(p => p.textContent === experience.jobTitle);
           expect(jobTitleParagraph).toBeInTheDocument();
 
-          // Should render duration
-          // Find by text content instead of class selector
-          const durationParagraph = Array.from(allParagraphs).find(p => p.textContent === experience.duration);
-          expect(durationParagraph).toBeInTheDocument();
+          // Should render duration (in span element)
+          const durationSpan = Array.from(container.querySelectorAll('span')).find(
+            span => span.textContent === experience.duration
+          );
+          expect(durationSpan).toBeInTheDocument();
 
           // Should render company type
           expect(screen.getByText(experience.companyType)).toBeInTheDocument();

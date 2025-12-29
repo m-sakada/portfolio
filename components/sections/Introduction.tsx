@@ -52,12 +52,12 @@ export default function Introduction({ text, profileImage, name, nameEn, mvImage
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 {displayName}
                 {nameEn && (
-                  <span className="block text-base sm:text-lg md:text-xl font-normal text-gray-600 mt-1">
+                  <span className="block text-base sm:text-lg md:text-xl text-gray-700 mt-1">
                     {nameEn}
                   </span>
                 )}
               </h1>
-              <p className="text-gray-700 leading-relaxed" style={{ fontSize: 'var(--text-sm)' }}>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-line" style={{ fontSize: 'var(--text-sm)' }}>
                 {text || defaultText}
               </p>
             </div>
