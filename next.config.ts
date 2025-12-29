@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // テスト用パッケージを本番バンドルから除外
+  serverExternalPackages: ['jsdom'],
 };
 
 export default nextConfig;
