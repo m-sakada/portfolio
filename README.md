@@ -159,9 +159,49 @@ npm run build
 3. 環境変数を設定：
    - `MICROCMS_SERVICE_DOMAIN`
    - `MICROCMS_API_KEY`
+   - `MICROCMS_WEBHOOK_SECRET` (On-demand ISR用)
    - `BASIC_AUTH_USER` (Basic認証を有効にする場合)
    - `BASIC_AUTH_PASSWORD` (Basic認証を有効にする場合)
 4. 自動デプロイが開始されます
+
+## On-demand ISRの設定
+microCMSでコンテンツを更新した際に、自動でページを再生成する仕組み
+
+#### 1. Webhook Secretの設定
+
+1. 任意のシークレット文字列を生成（例: `openssl rand -hex 32`）
+2. Vercelの環境変数に `MICROCMS_WEBHOOK_SECRET` として設定
+3. `.env.local` にも同じ値を設定（ローカル開発用）
+
+#### 2. microCMS Webhookの設定
+microCMS管理画面 → 各API → API設定 → Webhook
+   - **サービスの選択**: カスタム通知
+   - **URL**: `https://your-domain/api/revalidate`
+   - **シークレット**: `MICROCMS_WEBHOOK_SECRET` の値
+   - **トリガー**: コンテンツの公開・非公開
+
+#### 3. 動作確認
+
+Webhookエンドポイントの状態確認：
+```
+GET https://your-domain/api/revalidate
+```
+
+正常時のレスポンス：
+```json
+{
+  "status": "ok",
+  "message": "Revalidate webhook endpoint is ready",
+  "supportedApis": ["works", "experiences", "skills", "settings"]
+}
+```
+
+#### revalidate対象パス
+
+| API | revalidate対象 |
+|-----|---------------|
+| works, experiences, skills | `/` |
+| settings | `/`, `/about` |
 
 ## 技術スタック
 
