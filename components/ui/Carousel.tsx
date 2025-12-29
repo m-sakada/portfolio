@@ -128,7 +128,7 @@ export default function Carousel({
               key={idx}
               onClick={() => instanceRef.current?.moveToIdx(idx)}
               className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-opacity ${
-                currentSlide === idx ? 'bg-blue-600 opacity-100' : 'bg-blue-600 opacity-30'
+                currentSlide === idx ? 'bg-amber-500 opacity-100' : 'bg-amber-400 opacity-30'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />

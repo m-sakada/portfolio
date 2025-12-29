@@ -52,7 +52,7 @@ export default function Introduction({ text, profileImage, name, nameEn, mvImage
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 {displayName}
                 {nameEn && (
-                  <span className="block text-base sm:text-lg md:text-xl font-normal text-gray-600 mt-1">
+                  <span className="block text-base sm:text-lg md:text-xl text-gray-700 mt-1">
                     {nameEn}
                   </span>
                 )}

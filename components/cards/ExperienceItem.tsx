@@ -41,7 +41,7 @@ export default function ExperienceItem({ experience, onClick }: ExperienceItemPr
           <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex-shrink-0">
             {experience.companyName}
           </h3>
-          <span className="px-2 py-0.5 text-xs bg-green-100 text-green-800 rounded flex-shrink-0">
+          <span className="px-2 py-0.5 text-xs border border-gray-300 text-gray-800 rounded flex-shrink-0">
             {experience.companyType}
           </span>
           <span className="text-xs sm:text-sm text-gray-500 flex-shrink-0">
