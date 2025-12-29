@@ -57,21 +57,23 @@ export async function POST(request: NextRequest) {
     const body = JSON.parse(rawBody);
     const { api, type } = body;
 
-    console.log(`Revalidating: api=${api}, type=${type}`);
+    console.log(`[Revalidate] Received webhook: api=${api}, type=${type}, body=${rawBody}`);
 
     // APIに応じたパスをrevalidate
     const pathsToRevalidate = API_PATH_MAP[api] || ['/'];
     const revalidatedPaths: string[] = [];
 
     // microCMSデータのキャッシュタグを無効化（即時反映）
+    console.log('[Revalidate] Calling revalidateTag("microcms")');
     revalidateTag('microcms', { expire: 0 });
 
     for (const path of pathsToRevalidate) {
+      console.log(`[Revalidate] Calling revalidatePath("${path}")`);
       revalidatePath(path);
       revalidatedPaths.push(path);
     }
 
-    console.log(`Revalidated paths: ${revalidatedPaths.join(', ')} and tag: microcms`);
+    console.log(`[Revalidate] Success: paths=${revalidatedPaths.join(', ')}, tag=microcms`);
 
     return NextResponse.json({
       revalidated: true,
