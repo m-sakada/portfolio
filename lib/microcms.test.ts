@@ -1,15 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as fc from 'fast-check';
-import { getWorks, getExperiences, getSkills, client } from './microcms';
+import { getWorks, getExperiences, getSkills } from './microcms';
 import { isWork, isExperience, isSkill } from './type-guards';
 import { Work, Experience, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
 
-// Mock the microcms-js-sdk
-vi.mock('microcms-js-sdk', () => ({
-  createClient: vi.fn(() => ({
-    getList: vi.fn(),
-  })),
-}));
+// Mock global fetch
+const mockFetch = vi.fn();
+vi.stubGlobal('fetch', mockFetch);
 
 describe('microCMS Client Property Tests', () => {
   beforeEach(() => {
@@ -97,22 +94,17 @@ describe('microCMS Client Property Tests', () => {
     });
 
     it('should return correctly typed Work data for any valid API response', async () => {
-      /**
-       * Feature: portfolio-site, Property 1: API Client Returns Correctly Typed Data
-       * Validates: Requirements 2.1, 2.2, 2.3, 3.1-3.8, 4.1-4.8, 5.1-5.5
-       */
       await fc.assert(
         fc.asyncProperty(
           fc.array(workArb, { minLength: 0, maxLength: 10 }),
           async (mockWorks) => {
-            // Mock the API response
-            const mockResponse = { contents: mockWorks };
-            vi.mocked(client.getList).mockResolvedValueOnce(mockResponse);
+            mockFetch.mockResolvedValueOnce({
+              ok: true,
+              json: async () => ({ contents: mockWorks }),
+            });
 
-            // Call the function
             const result = await getWorks();
 
-            // Verify all returned items conform to Work interface
             expect(Array.isArray(result)).toBe(true);
             result.forEach(work => {
               expect(isWork(work)).toBe(true);
@@ -125,22 +117,17 @@ describe('microCMS Client Property Tests', () => {
     });
 
     it('should return correctly typed Experience data for any valid API response', async () => {
-      /**
-       * Feature: portfolio-site, Property 1: API Client Returns Correctly Typed Data
-       * Validates: Requirements 2.1, 2.2, 2.3, 3.1-3.8, 4.1-4.8, 5.1-5.5
-       */
       await fc.assert(
         fc.asyncProperty(
           fc.array(experienceArb, { minLength: 0, maxLength: 10 }),
           async (mockExperiences) => {
-            // Mock the API response
-            const mockResponse = { contents: mockExperiences };
-            vi.mocked(client.getList).mockResolvedValueOnce(mockResponse);
+            mockFetch.mockResolvedValueOnce({
+              ok: true,
+              json: async () => ({ contents: mockExperiences }),
+            });
 
-            // Call the function
             const result = await getExperiences();
 
-            // Verify all returned items conform to Experience interface
             expect(Array.isArray(result)).toBe(true);
             result.forEach(experience => {
               expect(isExperience(experience)).toBe(true);
@@ -153,22 +140,17 @@ describe('microCMS Client Property Tests', () => {
     });
 
     it('should return correctly typed Skill data for any valid API response', async () => {
-      /**
-       * Feature: portfolio-site, Property 1: API Client Returns Correctly Typed Data
-       * Validates: Requirements 2.1, 2.2, 2.3, 3.1-3.8, 4.1-4.8, 5.1-5.5
-       */
       await fc.assert(
         fc.asyncProperty(
           fc.array(skillArb, { minLength: 0, maxLength: 10 }),
           async (mockSkills) => {
-            // Mock the API response
-            const mockResponse = { contents: mockSkills };
-            vi.mocked(client.getList).mockResolvedValueOnce(mockResponse);
+            mockFetch.mockResolvedValueOnce({
+              ok: true,
+              json: async () => ({ contents: mockSkills }),
+            });
 
-            // Call the function
             const result = await getSkills();
 
-            // Verify all returned items conform to Skill interface
             expect(Array.isArray(result)).toBe(true);
             result.forEach(skill => {
               expect(isSkill(skill)).toBe(true);
@@ -183,10 +165,6 @@ describe('microCMS Client Property Tests', () => {
 
   describe('Property 2: API Error Handling Returns Fallback', () => {
     it('should return empty array for any API error in getWorks', async () => {
-      /**
-       * Feature: portfolio-site, Property 2: API Error Handling Returns Fallback
-       * Validates: Requirements 2.4
-       */
       await fc.assert(
         fc.asyncProperty(
           fc.oneof(
@@ -198,13 +176,10 @@ describe('microCMS Client Property Tests', () => {
             fc.constant(new ReferenceError('Variable not defined'))
           ),
           async (error) => {
-            // Mock the API to throw an error
-            vi.mocked(client.getList).mockRejectedValueOnce(error);
+            mockFetch.mockRejectedValueOnce(error);
 
-            // Call the function
             const result = await getWorks();
 
-            // Verify it returns empty array
             expect(Array.isArray(result)).toBe(true);
             expect(result).toEqual([]);
           }
@@ -214,10 +189,6 @@ describe('microCMS Client Property Tests', () => {
     });
 
     it('should return empty array for any API error in getExperiences', async () => {
-      /**
-       * Feature: portfolio-site, Property 2: API Error Handling Returns Fallback
-       * Validates: Requirements 2.4
-       */
       await fc.assert(
         fc.asyncProperty(
           fc.oneof(
@@ -229,13 +200,10 @@ describe('microCMS Client Property Tests', () => {
             fc.constant(new ReferenceError('Variable not defined'))
           ),
           async (error) => {
-            // Mock the API to throw an error
-            vi.mocked(client.getList).mockRejectedValueOnce(error);
+            mockFetch.mockRejectedValueOnce(error);
 
-            // Call the function
             const result = await getExperiences();
 
-            // Verify it returns empty array
             expect(Array.isArray(result)).toBe(true);
             expect(result).toEqual([]);
           }
@@ -245,10 +213,6 @@ describe('microCMS Client Property Tests', () => {
     });
 
     it('should return empty array for any API error in getSkills', async () => {
-      /**
-       * Feature: portfolio-site, Property 2: API Error Handling Returns Fallback
-       * Validates: Requirements 2.4
-       */
       await fc.assert(
         fc.asyncProperty(
           fc.oneof(
@@ -260,19 +224,28 @@ describe('microCMS Client Property Tests', () => {
             fc.constant(new ReferenceError('Variable not defined'))
           ),
           async (error) => {
-            // Mock the API to throw an error
-            vi.mocked(client.getList).mockRejectedValueOnce(error);
+            mockFetch.mockRejectedValueOnce(error);
 
-            // Call the function
             const result = await getSkills();
 
-            // Verify it returns empty array
             expect(Array.isArray(result)).toBe(true);
             expect(result).toEqual([]);
           }
         ),
         { numRuns: 100 }
       );
+    });
+
+    it('should return empty array when API returns non-ok response', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+      });
+
+      const result = await getWorks();
+
+      expect(Array.isArray(result)).toBe(true);
+      expect(result).toEqual([]);
     });
   });
 });
