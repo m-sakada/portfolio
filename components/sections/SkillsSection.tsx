@@ -50,7 +50,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
           {skillsWithAnimation.map((skill) => (
             <div
               key={skill.id}
-              className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-white rounded-full shadow-sm border border-gray-100 animate-float cursor-pointer hover:shadow-md hover:border-gray-200 transition-shadow ${hoveredSkill === skill.id ? 'z-50' : 'z-0'}`}
+              className={`relative inline-flex flex-col items-center px-3 py-2 sm:px-4 sm:py-3 bg-white rounded-xl shadow-sm border border-gray-100 animate-float cursor-pointer hover:shadow-md hover:border-gray-200 transition-shadow ${hoveredSkill === skill.id ? 'z-50' : 'z-0'}`}
               style={{
                 animationDuration: skill.animationDuration,
                 animationDelay: skill.animationDelay,
@@ -60,23 +60,18 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
               onMouseLeave={() => setHoveredSkill(null)}
             >
               {/* Icon */}
-              <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
                 <Image
                   src={skill.icon.url}
                   alt={`${skill.name}のアイコン`}
                   fill
                   className="object-contain"
-                  sizes="24px"
+                  sizes="40px"
                 />
               </div>
 
-              {/* Name */}
-              <span className="text-sm sm:text-base font-medium text-gray-800">
-                {skill.name}
-              </span>
-
               {/* Years */}
-              <span className="text-xs sm:text-sm text-gray-500">
+              <span className="text-xs text-gray-500 mt-1">
                 {skill.yearsOfExperience}
               </span>
 
@@ -88,10 +83,15 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
                     <div className="w-3 h-3 bg-white border-l border-t border-gray-200 transform rotate-45" />
                   </div>
                   
-                  {/* Category badge */}
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded mb-2">
-                    {skill.category}
-                  </span>
+                  {/* Category badge with skill name */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded">
+                      {skill.category}
+                    </span>
+                    <span className="text-base font-bold text-gray-800">
+                      {skill.name}
+                    </span>
+                  </div>
                   
                   {/* Details */}
                   {skill.details && (
