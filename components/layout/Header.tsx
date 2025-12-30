@@ -28,7 +28,7 @@ export default function Header({ showAbout = true, nameEn }: HeaderProps) {
           {/* Logo */}
           <Link 
             href="/" 
-            className="text-xl font-bold text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-xl font-bold text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors tracking-[.1em]"
             onClick={closeMenu}
           >
             {siteTitle}
@@ -40,13 +40,13 @@ export default function Header({ showAbout = true, nameEn }: HeaderProps) {
               <nav className="hidden md:flex items-center space-x-8">
                 <Link 
                   href="/" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold tracking-[.1em]"
                 >
                   TOP
                 </Link>
                 <Link 
                   href="/about" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold tracking-[.1em]"
                 >
                   About
                 </Link>
@@ -80,14 +80,14 @@ export default function Header({ showAbout = true, nameEn }: HeaderProps) {
             <div className="flex flex-col space-y-4">
               <Link 
                 href="/" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1 tracking-[.1em]"
                 onClick={closeMenu}
               >
                 TOP
               </Link>
               <Link 
                 href="/about" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1 tracking-[.1em]"
                 onClick={closeMenu}
               >
                 About

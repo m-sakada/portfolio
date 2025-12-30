@@ -28,7 +28,7 @@ export default async function Home() {
       <SkillsSection skills={skills} />
       {settings?.detailMessage && (
         <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20 bg-white">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
             <MicroCmsHtml 
               html={settings.detailMessage}
               className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl mx-auto"

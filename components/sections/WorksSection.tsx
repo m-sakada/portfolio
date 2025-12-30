@@ -33,8 +33,8 @@ export default function WorksSection({ works }: WorksSectionProps) {
           <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
-          <span>Works</span>
-          <span className="text-sm sm:text-base font-normal text-muted-gray-text">- 実績例 -</span>
+          <span className="tracking-[.1em]">Works</span>
+          <span className="text-sm sm:text-base font-normal text-muted-gray-text translate-y-[2px]">- 実績例 -</span>
         </h2>
 
         <Carousel>
