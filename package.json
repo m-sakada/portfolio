@@ -11,6 +11,7 @@
     "test:run": "vitest --run"
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.1",
     "dompurify": "^3.3.1",
     "keen-slider": "^6.8.6",
     "microcms-js-sdk": "^3.2.0",
