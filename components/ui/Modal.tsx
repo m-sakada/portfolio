@@ -97,7 +97,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4"
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"

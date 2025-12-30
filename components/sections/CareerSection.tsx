@@ -32,8 +32,8 @@ export default function CareerSection({ career }: CareerSectionProps) {
           <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
-          <span>Career</span>
-          <span className="text-sm sm:text-base font-normal text-muted-gray-text">- 経歴 -</span>
+          <span className="tracking-[.1em]">Career</span>
+          <span className="text-sm sm:text-base font-normal text-muted-gray-text translate-y-[2px]">- 職歴 -</span>
         </h2>
 
         {/* Table-style list with horizontal lines */}
