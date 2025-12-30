@@ -33,19 +33,26 @@ npm install
 
 ### 2. 環境変数の設定
 
-`.env.local`ファイルを作成し、microCMSの設定を追加：
+`.env.example`を参考に`.env.local`ファイルを作成
 
+**microCMS**
 ```env
 MICROCMS_SERVICE_DOMAIN=your-service-name
 MICROCMS_API_KEY=your-api-key
+MICROCMS_WEBHOOK_SECRET=XXXXXXXXXX
 ```
 
-**Basic認証について:**
+**Basic認証**
 - 下記が設定されている場合のみ認証が有効
 
 ```env
 BASIC_AUTH_USER=user-name
 BASIC_AUTH_PASSWORD=user-password
+```
+
+**Google Analytics 4**
+```env
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ```
 
 
@@ -162,6 +169,7 @@ npm run build
    - `MICROCMS_WEBHOOK_SECRET` (On-demand ISR用)
    - `BASIC_AUTH_USER` (Basic認証を有効にする場合)
    - `BASIC_AUTH_PASSWORD` (Basic認証を有効にする場合)
+   - `NEXT_PUBLIC_GA_ID` (Google Analytics 4)
 4. 自動デプロイが開始されます
 
 ## On-demand ISRの設定
