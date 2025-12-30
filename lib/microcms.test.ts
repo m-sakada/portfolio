@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as fc from 'fast-check';
-import { getWorks, getExperiences, getSkills } from './microcms';
-import { isWork, isExperience, isSkill } from './type-guards';
-import { Work, Experience, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
+import { getWorks, getCareer, getSkills } from './microcms';
+import { isWork, isCareer, isSkill } from './type-guards';
+import { Work, Career, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
 
 // Mock global fetch
 const mockFetch = vi.fn();
@@ -72,7 +72,7 @@ describe('microCMS Client Property Tests', () => {
       details: fc.string({ minLength: 1, maxLength: 1000 }),
     });
 
-    const experienceArb = fc.record({
+    const careerArb = fc.record({
       id: fc.uuid(),
       companyName: fc.string({ minLength: 1, maxLength: 100 }),
       companyLogo: microCMSImageArb,
@@ -116,23 +116,23 @@ describe('microCMS Client Property Tests', () => {
       );
     });
 
-    it('should return correctly typed Experience data for any valid API response', async () => {
+    it('should return correctly typed Career data for any valid API response', async () => {
       await fc.assert(
         fc.asyncProperty(
-          fc.array(experienceArb, { minLength: 0, maxLength: 10 }),
-          async (mockExperiences) => {
+          fc.array(careerArb, { minLength: 0, maxLength: 10 }),
+          async (mockCareer) => {
             mockFetch.mockResolvedValueOnce({
               ok: true,
-              json: async () => ({ contents: mockExperiences }),
+              json: async () => ({ contents: mockCareer }),
             });
 
-            const result = await getExperiences();
+            const result = await getCareer();
 
             expect(Array.isArray(result)).toBe(true);
-            result.forEach(experience => {
-              expect(isExperience(experience)).toBe(true);
+            result.forEach(career => {
+              expect(isCareer(career)).toBe(true);
             });
-            expect(result).toEqual(mockExperiences);
+            expect(result).toEqual(mockCareer);
           }
         ),
         { numRuns: 100 }
@@ -188,7 +188,7 @@ describe('microCMS Client Property Tests', () => {
       );
     });
 
-    it('should return empty array for any API error in getExperiences', async () => {
+    it('should return empty array for any API error in getCareer', async () => {
       await fc.assert(
         fc.asyncProperty(
           fc.oneof(
@@ -202,7 +202,7 @@ describe('microCMS Client Property Tests', () => {
           async (error) => {
             mockFetch.mockRejectedValueOnce(error);
 
-            const result = await getExperiences();
+            const result = await getCareer();
 
             expect(Array.isArray(result)).toBe(true);
             expect(result).toEqual([]);

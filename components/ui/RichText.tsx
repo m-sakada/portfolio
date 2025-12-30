@@ -38,7 +38,7 @@ export default function RichText({ content, className = '' }: RichTextProps) {
         className={`rich-text ${className}`}
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
-      <style jsx>{`
+      <style jsx global>{`
         .rich-text {
           line-height: 1.7;
           color: #374151;
@@ -72,10 +72,16 @@ export default function RichText({ content, className = '' }: RichTextProps) {
           margin-bottom: 1em;
         }
         
-        .rich-text ul,
+        .rich-text ul {
+          margin-bottom: 1em;
+          padding-left: 1.5em;
+          list-style-type: disc;
+        }
+        
         .rich-text ol {
           margin-bottom: 1em;
           padding-left: 1.5em;
+          list-style-type: decimal;
         }
         
         .rich-text li {
