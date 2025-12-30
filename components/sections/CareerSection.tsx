@@ -61,7 +61,7 @@ export default function CareerSection({ career }: CareerSectionProps) {
                     href={selectedCareer.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-muted-blue-text hover:text-[#4a6a84] hover:underline text-sm"
+                    className="inline-flex items-center gap-1 text-muted-blue-text hover:text-[#4a6a84] hover:underline text-sm break-all"
                   >
                     <svg
                       className="w-4 h-4"

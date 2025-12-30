@@ -97,7 +97,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-white/60 p-0 sm:p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 p-4"
       onClick={handleOverlayClick}
       role="dialog"
       aria-modal="true"
@@ -105,11 +105,11 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
     >
       <div
         ref={modalRef}
-        className="relative w-full sm:max-w-2xl max-h-[85vh] sm:max-h-[90vh] bg-white rounded-t-xl sm:rounded-lg shadow-xl overflow-hidden"
+        className="relative w-full sm:max-w-2xl max-h-[80vh] sm:max-h-[90vh] bg-white rounded-xl sm:rounded-lg shadow-xl flex flex-col"
         tabIndex={-1}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
           <h2 id="modal-title" className="text-lg sm:text-xl font-semibold text-gray-900 pr-8 line-clamp-2">
             {title}
           </h2>
@@ -135,7 +135,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
         </div>
 
         {/* Content */}
-        <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(85vh-80px)] sm:max-h-[calc(90vh-120px)]">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0">
           {children}
         </div>
       </div>

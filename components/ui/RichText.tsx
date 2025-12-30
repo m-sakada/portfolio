@@ -91,6 +91,8 @@ export default function RichText({ content, className = '' }: RichTextProps) {
         .rich-text a {
           color: #3b82f6;
           text-decoration: underline;
+          word-break: break-all;
+          overflow-wrap: anywhere;
         }
         
         .rich-text a:hover {
