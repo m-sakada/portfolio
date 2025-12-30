@@ -22,6 +22,7 @@ export default function Introduction({ text, profileImage, name, nameEn, mvImage
             src={mvImage.url}
             alt="メインビジュアル"
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -40,6 +41,7 @@ export default function Introduction({ text, profileImage, name, nameEn, mvImage
                     src={profileImage.url}
                     alt={displayName}
                     fill
+                    sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                     className="object-cover"
                     priority
                   />

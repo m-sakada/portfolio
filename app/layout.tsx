@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const currentYear = new Date().getFullYear();
   const name = settings?.name || "Portfolio Owner";
   const title = `${name} | ポートフォリオサイト`;
-  const description = `${currentYear}年現在の${name}のポートフォリオサイトです。経験サイト、経歴、スキルを記載しています。`;
+  const description = `${currentYear}年現在の${name}のポートフォリオサイトです。実績例、職歴、スキルを記載しています。`;
 
   return {
     title: {
