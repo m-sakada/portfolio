@@ -62,19 +62,21 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const settings = await getSettings();
+  const showAbout = !!settings?.aboutContent;
 
   return (
     <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Header />
+        <Header showAbout={showAbout} nameEn={settings?.nameEn} />
         <main className="flex-1">
           {children}
         </main>
