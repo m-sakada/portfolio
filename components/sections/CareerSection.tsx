@@ -1,27 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { Experience } from '@/lib/types';
-import ExperienceItem from '@/components/cards/ExperienceItem';
+import { Career } from '@/lib/types';
+import CareerItem from '@/components/cards/CareerItem';
 import Modal from '@/components/ui/Modal';
 import RichText from '@/components/ui/RichText';
 
-interface ExperiencesSectionProps {
-  experiences: Experience[];
+interface CareerSectionProps {
+  career: Career[];
 }
 
-export default function ExperiencesSection({ experiences }: ExperiencesSectionProps) {
-  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+export default function CareerSection({ career }: CareerSectionProps) {
+  const [selectedCareer, setSelectedCareer] = useState<Career | null>(null);
 
-  const handleOpenModal = (experience: Experience) => {
-    setSelectedExperience(experience);
+  const handleOpenModal = (careerItem: Career) => {
+    setSelectedCareer(careerItem);
   };
 
   const handleCloseModal = () => {
-    setSelectedExperience(null);
+    setSelectedCareer(null);
   };
 
-  if (experiences.length === 0) {
+  if (career.length === 0) {
     return null;
   }
 
@@ -38,27 +38,27 @@ export default function ExperiencesSection({ experiences }: ExperiencesSectionPr
 
         {/* Table-style list with horizontal lines */}
         <div>
-          {experiences.map((experience) => (
-            <ExperienceItem
-              key={experience.id}
-              experience={experience}
-              onClick={() => handleOpenModal(experience)}
+          {career.map((careerItem) => (
+            <CareerItem
+              key={careerItem.id}
+              career={careerItem}
+              onClick={() => handleOpenModal(careerItem)}
             />
           ))}
         </div>
 
         <Modal
-          isOpen={selectedExperience !== null}
+          isOpen={selectedCareer !== null}
           onClose={handleCloseModal}
-          title={selectedExperience?.companyName || ''}
+          title={selectedCareer?.companyName || ''}
         >
-          {selectedExperience && (
+          {selectedCareer && (
             <div>
               {/* Company URL Link */}
-              {selectedExperience.url && (
+              {selectedCareer.url && (
                 <div className="mb-4 pb-4 border-b border-muted-border">
                   <a
-                    href={selectedExperience.url}
+                    href={selectedCareer.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-muted-blue-text hover:text-[#4a6a84] hover:underline text-sm"
@@ -76,11 +76,11 @@ export default function ExperiencesSection({ experiences }: ExperiencesSectionPr
                         d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                       />
                     </svg>
-                    {selectedExperience.url}
+                    {selectedCareer.url}
                   </a>
                 </div>
               )}
-              <RichText content={selectedExperience.details} />
+              <RichText content={selectedCareer.details} />
             </div>
           )}
         </Modal>
