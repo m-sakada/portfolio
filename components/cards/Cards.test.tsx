@@ -3,9 +3,9 @@ import { render, screen, cleanup, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as fc from 'fast-check';
 import WorkCard from './WorkCard';
-import ExperienceItem from './ExperienceItem';
+import CareerItem from './CareerItem';
 import SkillCard from './SkillCard';
-import { Work, Experience, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from '@/lib/types';
+import { Work, Career, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from '@/lib/types';
 
 // Mock next/image
 vi.mock('next/image', () => ({
@@ -81,7 +81,7 @@ const workArb: fc.Arbitrary<Work> = fc.record({
   details: detailsStringArb,
 });
 
-const experienceArb: fc.Arbitrary<Experience> = fc.record({
+const careerArb: fc.Arbitrary<Career> = fc.record({
   id: fc.uuid(),
   companyName: uniqueCompanyNameArb,
   companyLogo: microCMSImageArb,
@@ -151,50 +151,50 @@ describe('Card Components Property Tests', () => {
       );
     });
 
-    it('ExperienceItem should render all fields except details for any valid Experience', async () => {
+    it('CareerItem should render all fields except details for any valid Career', async () => {
       /**
        * Feature: portfolio-site, Property 4: Card/List Rendering Excludes Details
        * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
        */
       await fc.assert(
-        fc.asyncProperty(experienceArb, async (experience) => {
+        fc.asyncProperty(careerArb, async (career) => {
           cleanup();
           const onClick = vi.fn();
 
-          const { container } = render(<ExperienceItem experience={experience} onClick={onClick} />);
+          const { container } = render(<CareerItem career={career} onClick={onClick} />);
 
           // Should render company name (in h3)
           const heading = container.querySelector('h3');
           expect(heading).toBeInTheDocument();
-          expect(heading?.textContent).toBe(experience.companyName);
+          expect(heading?.textContent).toBe(career.companyName);
 
           // Should render job title
           // The component uses responsive classes: text-sm sm:text-base text-gray-700
           // Find by text content instead of class selector
           const allParagraphs = container.querySelectorAll('p');
-          const jobTitleParagraph = Array.from(allParagraphs).find(p => p.textContent === experience.jobTitle);
+          const jobTitleParagraph = Array.from(allParagraphs).find(p => p.textContent === career.jobTitle);
           expect(jobTitleParagraph).toBeInTheDocument();
 
           // Should render duration (in span element)
           const durationSpan = Array.from(container.querySelectorAll('span')).find(
-            span => span.textContent === experience.duration
+            span => span.textContent === career.duration
           );
           expect(durationSpan).toBeInTheDocument();
 
           // Should render company type
-          expect(screen.getByText(experience.companyType)).toBeInTheDocument();
+          expect(screen.getByText(career.companyType)).toBeInTheDocument();
 
           // Should render work experiences (check textContent for each)
           const workExpContainer = container.querySelector('.flex.flex-wrap.gap-1');
           expect(workExpContainer).toBeInTheDocument();
-          experience.workExperiences.forEach(exp => {
+          career.workExperiences.forEach(exp => {
             expect(workExpContainer?.textContent).toContain(exp);
           });
 
           // Should render company logo
           const img = container.querySelector('img');
           expect(img).toBeInTheDocument();
-          expect(img).toHaveAttribute('src', experience.companyLogo.url);
+          expect(img).toHaveAttribute('src', career.companyLogo.url);
 
           // Should NOT render details content
           expect(container.textContent).not.toContain('DETAILS_CONTENT_');
@@ -303,7 +303,7 @@ describe('Card Components Property Tests', () => {
       );
     });
 
-    it('ExperienceItem should trigger onClick when clicked for any valid Experience', async () => {
+    it('CareerItem should trigger onClick when clicked for any valid Career', async () => {
       /**
        * Feature: portfolio-site, Property 5: Modal Displays Details on Click
        * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
@@ -311,11 +311,11 @@ describe('Card Components Property Tests', () => {
       const user = userEvent.setup();
 
       await fc.assert(
-        fc.asyncProperty(experienceArb, async (experience) => {
+        fc.asyncProperty(careerArb, async (career) => {
           cleanup();
           const onClick = vi.fn();
 
-          render(<ExperienceItem experience={experience} onClick={onClick} />);
+          render(<CareerItem career={career} onClick={onClick} />);
 
           // Click the item
           const item = screen.getByRole('button');
@@ -324,15 +324,15 @@ describe('Card Components Property Tests', () => {
           // onClick should be called exactly once
           expect(onClick).toHaveBeenCalledTimes(1);
 
-          // The experience object with details should be available for modal display
-          expect(experience.details).toBeDefined();
-          expect(experience.details.length).toBeGreaterThan(0);
+          // The career object with details should be available for modal display
+          expect(career.details).toBeDefined();
+          expect(career.details.length).toBeGreaterThan(0);
         }),
         { numRuns: 100 }
       );
     });
 
-    it('ExperienceItem should trigger onClick on keyboard Enter/Space for any valid Experience', async () => {
+    it('CareerItem should trigger onClick on keyboard Enter/Space for any valid Career', async () => {
       /**
        * Feature: portfolio-site, Property 5: Modal Displays Details on Click
        * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
@@ -340,11 +340,11 @@ describe('Card Components Property Tests', () => {
       const user = userEvent.setup();
 
       await fc.assert(
-        fc.asyncProperty(experienceArb, async (experience) => {
+        fc.asyncProperty(careerArb, async (career) => {
           cleanup();
           const onClick = vi.fn();
 
-          render(<ExperienceItem experience={experience} onClick={onClick} />);
+          render(<CareerItem career={career} onClick={onClick} />);
 
           const item = screen.getByRole('button');
           item.focus();

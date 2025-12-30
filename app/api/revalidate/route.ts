@@ -5,7 +5,7 @@ import crypto from 'crypto';
 // API名とrevalidate対象パスのマッピング
 const API_PATH_MAP: Record<string, string[]> = {
   works: ['/'],
-  experiences: ['/'],
+  career: ['/'],
   skills: ['/'],
   settings: ['/', '/about'],
 };

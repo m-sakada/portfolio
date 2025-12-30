@@ -20,7 +20,7 @@ Next.js 16.0.10 + microCMS + Vercelで構築されたポートフォリオサイ
 
 ### コンテンツ管理
 - **Works** - 実績情報（プロジェクト、技術スタック、期間など）
-- **Experiences** - 経歴情報（会社、職種、期間など）
+- **Career** - 経歴情報（会社、職種、期間など）
 - **Skills** - スキル情報（技術、経験年数、カテゴリなど）
 
 ## セットアップ
@@ -95,8 +95,8 @@ BASIC_AUTH_PASSWORD=user-password
 | technologies | 技術 | 複数選択フィールド | ✓ | Next.js, TypeScript, microCMS, Vercel, AWS, WordPress, XServer, Kinsta, PHP, VanillaJS, Sass |
 | details | 詳細 | リッチエディタ | ✓ | - |
 
-#### Experiences API
-- API名: `experiences`
+#### Career API
+- API名: `career`
 - 形式: リスト形式
 
 | フィールドID | フィールド名 | タイプ | 必須 | 選択肢 |
@@ -192,7 +192,7 @@ GET https://your-domain/api/revalidate
 {
   "status": "ok",
   "message": "Revalidate webhook endpoint is ready",
-  "supportedApis": ["works", "experiences", "skills", "settings"]
+  "supportedApis": ["works", "career", "skills", "settings"]
 }
 ```
 
@@ -200,7 +200,7 @@ GET https://your-domain/api/revalidate
 
 | API | revalidate対象 |
 |-----|---------------|
-| works, experiences, skills | `/` |
+| works, career, skills | `/` |
 | settings | `/`, `/about` |
 
 ## 技術スタック

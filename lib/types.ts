@@ -55,8 +55,8 @@ export interface Work {
   details: string;                  // 詳細（リッチテキスト）
 }
 
-// Experience interface
-export interface Experience {
+// Career interface
+export interface Career {
   id: string;
   companyName: string;              // 会社名
   companyLogo: MicroCMSImage;       // 会社ロゴ

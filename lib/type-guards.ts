@@ -1,4 +1,4 @@
-import { Work, Experience, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
+import { Work, Career, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
 
 // Type guard for MicroCMSImage
 function isMicroCMSImage(obj: any): obj is { url: string; width: number; height: number } {
@@ -80,8 +80,8 @@ export function isWork(obj: any): obj is Work {
   );
 }
 
-// Type guard for Experience
-export function isExperience(obj: any): obj is Experience {
+// Type guard for Career
+export function isCareer(obj: any): obj is Career {
   return (
     typeof obj === 'object' &&
     obj !== null &&

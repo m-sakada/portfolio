@@ -1,6 +1,6 @@
 'use client';
 
-import DOMPurify from 'isomorphic-dompurify';
+import { useEffect, useState } from 'react';
 
 interface RichTextProps {
   content: string;
@@ -8,7 +8,11 @@ interface RichTextProps {
 }
 
 export default function RichText({ content, className = '' }: RichTextProps) {
-  const sanitizedContent = DOMPurify.sanitize(content || '', {
+  const [sanitizedContent, setSanitizedContent] = useState('');
+
+  useEffect(() => {
+    import('dompurify').then((DOMPurify) => {
+      setSanitizedContent(DOMPurify.default.sanitize(content || '', {
     ALLOWED_TAGS: [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'p', 'br', 'hr',
@@ -18,9 +22,15 @@ export default function RichText({ content, className = '' }: RichTextProps) {
       'img', 'figure', 'figcaption',
       'div', 'span',
     ],
-    ALLOWED_ATTR: ['href', 'target', 'rel', 'src', 'alt', 'width', 'height', 'class'],
-    ALLOW_DATA_ATTR: false,
-  });
+        ALLOWED_ATTR: ['href', 'target', 'rel', 'src', 'alt', 'width', 'height', 'class'],
+        ALLOW_DATA_ATTR: false,
+      }));
+    });
+  }, [content]);
+
+  if (!sanitizedContent) {
+    return null;
+  }
 
   return (
     <>

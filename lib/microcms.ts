@@ -1,4 +1,4 @@
-import { Work, Experience, Skill, Settings } from './types';
+import { Work, Career, Skill, Settings } from './types';
 
 const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN!;
 const apiKey = process.env.MICROCMS_API_KEY!;
@@ -43,15 +43,15 @@ export async function getWorks(): Promise<Work[]> {
 }
 
 /**
- * Fetch all experiences from microCMS
+ * Fetch all career entries from microCMS
  * Returns empty array on error for graceful fallback
  */
-export async function getExperiences(): Promise<Experience[]> {
+export async function getCareer(): Promise<Career[]> {
   try {
-    const response = await fetchFromMicroCMS<{ contents: Experience[] }>('experiences');
+    const response = await fetchFromMicroCMS<{ contents: Career[] }>('career');
     return response?.contents ?? [];
   } catch (error) {
-    console.error('Failed to fetch experiences:', error);
+    console.error('Failed to fetch career:', error);
     return [];
   }
 }
