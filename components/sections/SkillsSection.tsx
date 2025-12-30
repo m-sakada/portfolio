@@ -1,46 +1,34 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Skill, SkillCategory } from '@/lib/types';
-import SkillCard from '@/components/cards/SkillCard';
-import Modal from '@/components/ui/Modal';
+import { useMemo, useState } from 'react';
+import Image from 'next/image';
+import { Skill } from '@/lib/types';
 import RichText from '@/components/ui/RichText';
 
 interface SkillsSectionProps {
   skills: Skill[];
 }
 
-// Category display order
-const CATEGORY_ORDER: SkillCategory[] = ['言語', 'OS', 'ツール', 'インフラ'];
-
 export default function SkillsSection({ skills }: SkillsSectionProps) {
-  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
-  // Group skills by category
-  const groupedSkills = useMemo(() => {
-    const groups: Record<SkillCategory, Skill[]> = {
-      '言語': [],
-      'OS': [],
-      'ツール': [],
-      'インフラ': [],
-    };
-
-    skills.forEach((skill) => {
-      if (groups[skill.category]) {
-        groups[skill.category].push(skill);
-      }
+  // Generate consistent random positions based on skill id
+  const skillsWithAnimation = useMemo(() => {
+    return skills.map((skill, index) => {
+      // Use index for deterministic "randomness" to avoid hydration issues
+      const seed = index;
+      const duration = 3 + (seed % 3); // 3-5s
+      const delay = (seed * 0.3) % 2; // 0-2s delay
+      const floatRange = 8 + (seed % 8); // 8-15px float range
+      
+      return {
+        ...skill,
+        animationDuration: `${duration}s`,
+        animationDelay: `${delay}s`,
+        floatRange,
+      };
     });
-
-    return groups;
   }, [skills]);
-
-  const handleOpenModal = (skill: Skill) => {
-    setSelectedSkill(skill);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedSkill(null);
-  };
 
   if (skills.length === 0) {
     return null;
@@ -57,43 +45,68 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
           <span className="text-sm sm:text-base font-normal text-muted-gray-text">- スキル -</span>
         </h2>
 
-        <div className="space-y-6 sm:space-y-8">
-          {CATEGORY_ORDER.map((category) => {
-            const categorySkills = groupedSkills[category];
-            if (categorySkills.length === 0) return null;
-
-            return (
-              <div key={category}>
-                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-foreground mb-3 sm:mb-4">
-                  {category}
-                </h3>
-                {/* Responsive grid: 1 col mobile, 2 cols tablet (768px+), 3 cols desktop (1024px+) */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
-                  {categorySkills.map((skill) => (
-                    <SkillCard
-                      key={skill.id}
-                      skill={skill}
-                      onClick={() => handleOpenModal(skill)}
-                    />
-                  ))}
-                </div>
+        {/* Floating tag cloud */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+          {skillsWithAnimation.map((skill) => (
+            <div
+              key={skill.id}
+              className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 bg-white rounded-full shadow-sm border border-gray-100 animate-float cursor-pointer hover:shadow-md hover:border-gray-200 transition-shadow ${hoveredSkill === skill.id ? 'z-50' : 'z-0'}`}
+              style={{
+                animationDuration: skill.animationDuration,
+                animationDelay: skill.animationDelay,
+                ['--float-range' as string]: `${skill.floatRange}px`,
+              }}
+              onMouseEnter={() => setHoveredSkill(skill.id)}
+              onMouseLeave={() => setHoveredSkill(null)}
+            >
+              {/* Icon */}
+              <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0">
+                <Image
+                  src={skill.icon.url}
+                  alt={`${skill.name}のアイコン`}
+                  fill
+                  className="object-contain"
+                  sizes="24px"
+                />
               </div>
-            );
-          })}
-        </div>
 
-        <Modal
-          isOpen={selectedSkill !== null}
-          onClose={handleCloseModal}
-          title={selectedSkill?.name || ''}
-        >
-          {selectedSkill && (
-            <RichText content={selectedSkill.details} />
-          )}
-        </Modal>
+              {/* Name */}
+              <span className="text-sm sm:text-base font-medium text-gray-800">
+                {skill.name}
+              </span>
+
+              {/* Years */}
+              <span className="text-xs sm:text-sm text-gray-500">
+                {skill.yearsOfExperience}
+              </span>
+
+              {/* Tooltip - displayed below the skill tag */}
+              {hoveredSkill === skill.id && (
+                <div className="absolute z-[100] top-full left-1/2 -translate-x-1/2 mt-2 w-64 sm:w-72 p-3 bg-white rounded-lg shadow-lg border border-gray-200 animate-fade-in-down">
+                  {/* Arrow pointing up */}
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[-6px]">
+                    <div className="w-3 h-3 bg-white border-l border-t border-gray-200 transform rotate-45" />
+                  </div>
+                  
+                  {/* Category badge */}
+                  <span className="inline-block px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded mb-2">
+                    {skill.category}
+                  </span>
+                  
+                  {/* Details */}
+                  {skill.details && (
+                    <div className="text-sm max-h-40 overflow-y-auto">
+                      <RichText content={skill.details} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
       
-      {/* Animated Wave Border */}
+      {/* Wave Border */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
         <svg
           className="relative block w-full h-12 sm:h-16 md:h-20"

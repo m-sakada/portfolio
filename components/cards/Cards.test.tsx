@@ -1,11 +1,10 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup, within } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as fc from 'fast-check';
 import WorkCard from './WorkCard';
 import CareerItem from './CareerItem';
-import SkillCard from './SkillCard';
-import { Work, Career, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from '@/lib/types';
+import { Work, Career, WorkCategory, Technology, CompanyType } from '@/lib/types';
 
 // Mock next/image
 vi.mock('next/image', () => ({
@@ -50,23 +49,14 @@ const companyTypeArb = fc.constantFrom<CompanyType>(
   'フリーランス'
 );
 
-const skillCategoryArb = fc.constantFrom<SkillCategory>(
-  '言語',
-  'OS',
-  'ツール',
-  'インフラ'
-);
-
 // Unique string generators to avoid duplicate text issues
 const uniqueTitleArb = fc.string({ minLength: 5, maxLength: 30 }).map(s => `TITLE_${s.trim() || 'default'}`);
 const uniqueDurationArb = fc.string({ minLength: 3, maxLength: 20 }).map(s => `DURATION_${s.trim() || 'default'}`);
 const uniqueCompanyNameArb = fc.string({ minLength: 5, maxLength: 30 }).map(s => `COMPANY_${s.trim() || 'default'}`);
 const uniqueJobTitleArb = fc.string({ minLength: 5, maxLength: 30 }).map(s => `JOB_${s.trim() || 'default'}`);
-const uniqueSkillNameArb = fc.string({ minLength: 5, maxLength: 30 }).map(s => `SKILL_${s.trim() || 'default'}`);
-const uniqueYearsArb = fc.string({ minLength: 3, maxLength: 15 }).map(s => `YEARS_${s.trim() || 'default'}`);
 const uniqueWorkExpArb = fc.string({ minLength: 5, maxLength: 30 }).map(s => `WORKEXP_${s.trim() || 'default'}`);
 
-// Details string generator - must be distinguishable from other fields
+// Details string generator
 const detailsStringArb = fc.string({ minLength: 10, maxLength: 200 }).map(s => `<p>DETAILS_CONTENT_${s}</p>`);
 
 const workArb: fc.Arbitrary<Work> = fc.record({
@@ -93,15 +83,6 @@ const careerArb: fc.Arbitrary<Career> = fc.record({
   details: detailsStringArb,
 });
 
-const skillArb: fc.Arbitrary<Skill> = fc.record({
-  id: fc.uuid(),
-  name: uniqueSkillNameArb,
-  icon: microCMSImageArb,
-  category: skillCategoryArb,
-  yearsOfExperience: uniqueYearsArb,
-  details: detailsStringArb,
-});
-
 describe('Card Components Property Tests', () => {
   afterEach(() => {
     cleanup();
@@ -110,10 +91,6 @@ describe('Card Components Property Tests', () => {
 
   describe('Property 4: Card/List Rendering Excludes Details', () => {
     it('WorkCard should render all fields except details for any valid Work', async () => {
-      /**
-       * Feature: portfolio-site, Property 4: Card/List Rendering Excludes Details
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
       await fc.assert(
         fc.asyncProperty(workArb, async (work) => {
           cleanup();
@@ -121,30 +98,24 @@ describe('Card Components Property Tests', () => {
 
           const { container } = render(<WorkCard work={work} onClick={onClick} />);
 
-          // Should render title (in h3)
           const heading = container.querySelector('h3');
           expect(heading).toBeInTheDocument();
           expect(heading?.textContent).toBe(work.title);
 
-          // Should render category
           expect(screen.getByText(work.category)).toBeInTheDocument();
 
-          // Should render duration (use container query to handle whitespace)
           const durationContainer = container.querySelector('.flex.items-center.gap-2.mb-3');
           expect(durationContainer).toBeInTheDocument();
           expect(durationContainer?.textContent).toContain(work.duration);
 
-          // Should render technologies
           work.technologies.forEach(tech => {
             expect(screen.getByText(tech)).toBeInTheDocument();
           });
 
-          // Should render eyecatch image
           const img = container.querySelector('img');
           expect(img).toBeInTheDocument();
           expect(img).toHaveAttribute('src', work.eyecatch.url);
 
-          // Should NOT render details content
           expect(container.textContent).not.toContain('DETAILS_CONTENT_');
         }),
         { numRuns: 100 }
@@ -152,10 +123,6 @@ describe('Card Components Property Tests', () => {
     });
 
     it('CareerItem should render all fields except details for any valid Career', async () => {
-      /**
-       * Feature: portfolio-site, Property 4: Card/List Rendering Excludes Details
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
       await fc.assert(
         fc.asyncProperty(careerArb, async (career) => {
           cleanup();
@@ -163,77 +130,31 @@ describe('Card Components Property Tests', () => {
 
           const { container } = render(<CareerItem career={career} onClick={onClick} />);
 
-          // Should render company name (in h3)
           const heading = container.querySelector('h3');
           expect(heading).toBeInTheDocument();
           expect(heading?.textContent).toBe(career.companyName);
 
-          // Should render job title
-          // The component uses responsive classes: text-sm sm:text-base text-gray-700
-          // Find by text content instead of class selector
           const allParagraphs = container.querySelectorAll('p');
           const jobTitleParagraph = Array.from(allParagraphs).find(p => p.textContent === career.jobTitle);
           expect(jobTitleParagraph).toBeInTheDocument();
 
-          // Should render duration (in span element)
           const durationSpan = Array.from(container.querySelectorAll('span')).find(
             span => span.textContent === career.duration
           );
           expect(durationSpan).toBeInTheDocument();
 
-          // Should render company type
           expect(screen.getByText(career.companyType)).toBeInTheDocument();
 
-          // Should render work experiences (check textContent for each)
           const workExpContainer = container.querySelector('.flex.flex-wrap.gap-1');
           expect(workExpContainer).toBeInTheDocument();
           career.workExperiences.forEach(exp => {
             expect(workExpContainer?.textContent).toContain(exp);
           });
 
-          // Should render company logo
           const img = container.querySelector('img');
           expect(img).toBeInTheDocument();
           expect(img).toHaveAttribute('src', career.companyLogo.url);
 
-          // Should NOT render details content
-          expect(container.textContent).not.toContain('DETAILS_CONTENT_');
-        }),
-        { numRuns: 100 }
-      );
-    });
-
-    it('SkillCard should render all fields except details for any valid Skill', async () => {
-      /**
-       * Feature: portfolio-site, Property 4: Card/List Rendering Excludes Details
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
-      await fc.assert(
-        fc.asyncProperty(skillArb, async (skill) => {
-          cleanup();
-          const onClick = vi.fn();
-
-          const { container } = render(<SkillCard skill={skill} onClick={onClick} />);
-
-          // Should render name (in h3)
-          const heading = container.querySelector('h3');
-          expect(heading).toBeInTheDocument();
-          expect(heading?.textContent).toBe(skill.name);
-
-          // Should render category
-          expect(screen.getByText(skill.category)).toBeInTheDocument();
-
-          // Should render years of experience (use container query to handle whitespace)
-          const yearsElement = container.querySelector('span.text-gray-600');
-          expect(yearsElement).toBeInTheDocument();
-          expect(yearsElement?.textContent).toBe(skill.yearsOfExperience);
-
-          // Should render icon
-          const img = container.querySelector('img');
-          expect(img).toBeInTheDocument();
-          expect(img).toHaveAttribute('src', skill.icon.url);
-
-          // Should NOT render details content
           expect(container.textContent).not.toContain('DETAILS_CONTENT_');
         }),
         { numRuns: 100 }
@@ -243,10 +164,6 @@ describe('Card Components Property Tests', () => {
 
   describe('Property 5: Modal Displays Details on Click', () => {
     it('WorkCard should trigger onClick when clicked for any valid Work', async () => {
-      /**
-       * Feature: portfolio-site, Property 5: Modal Displays Details on Click
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
       const user = userEvent.setup();
 
       await fc.assert(
@@ -256,15 +173,10 @@ describe('Card Components Property Tests', () => {
 
           render(<WorkCard work={work} onClick={onClick} />);
 
-          // Click the card
           const card = screen.getByRole('button');
           await user.click(card);
 
-          // onClick should be called exactly once
           expect(onClick).toHaveBeenCalledTimes(1);
-
-          // The work object with details should be available for modal display
-          // (onClick is called, which allows parent to access work.details for modal)
           expect(work.details).toBeDefined();
           expect(work.details.length).toBeGreaterThan(0);
         }),
@@ -273,10 +185,6 @@ describe('Card Components Property Tests', () => {
     });
 
     it('WorkCard should trigger onClick on keyboard Enter/Space for any valid Work', async () => {
-      /**
-       * Feature: portfolio-site, Property 5: Modal Displays Details on Click
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
       const user = userEvent.setup();
 
       await fc.assert(
@@ -289,13 +197,11 @@ describe('Card Components Property Tests', () => {
           const card = screen.getByRole('button');
           card.focus();
 
-          // Press Enter
           await user.keyboard('{Enter}');
           expect(onClick).toHaveBeenCalledTimes(1);
 
           onClick.mockClear();
 
-          // Press Space
           await user.keyboard(' ');
           expect(onClick).toHaveBeenCalledTimes(1);
         }),
@@ -304,10 +210,6 @@ describe('Card Components Property Tests', () => {
     });
 
     it('CareerItem should trigger onClick when clicked for any valid Career', async () => {
-      /**
-       * Feature: portfolio-site, Property 5: Modal Displays Details on Click
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
       const user = userEvent.setup();
 
       await fc.assert(
@@ -317,14 +219,10 @@ describe('Card Components Property Tests', () => {
 
           render(<CareerItem career={career} onClick={onClick} />);
 
-          // Click the item
           const item = screen.getByRole('button');
           await user.click(item);
 
-          // onClick should be called exactly once
           expect(onClick).toHaveBeenCalledTimes(1);
-
-          // The career object with details should be available for modal display
           expect(career.details).toBeDefined();
           expect(career.details.length).toBeGreaterThan(0);
         }),
@@ -333,10 +231,6 @@ describe('Card Components Property Tests', () => {
     });
 
     it('CareerItem should trigger onClick on keyboard Enter/Space for any valid Career', async () => {
-      /**
-       * Feature: portfolio-site, Property 5: Modal Displays Details on Click
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
       const user = userEvent.setup();
 
       await fc.assert(
@@ -349,73 +243,11 @@ describe('Card Components Property Tests', () => {
           const item = screen.getByRole('button');
           item.focus();
 
-          // Press Enter
           await user.keyboard('{Enter}');
           expect(onClick).toHaveBeenCalledTimes(1);
 
           onClick.mockClear();
 
-          // Press Space
-          await user.keyboard(' ');
-          expect(onClick).toHaveBeenCalledTimes(1);
-        }),
-        { numRuns: 100 }
-      );
-    });
-
-    it('SkillCard should trigger onClick when clicked for any valid Skill', async () => {
-      /**
-       * Feature: portfolio-site, Property 5: Modal Displays Details on Click
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
-      const user = userEvent.setup();
-
-      await fc.assert(
-        fc.asyncProperty(skillArb, async (skill) => {
-          cleanup();
-          const onClick = vi.fn();
-
-          render(<SkillCard skill={skill} onClick={onClick} />);
-
-          // Click the card
-          const card = screen.getByRole('button');
-          await user.click(card);
-
-          // onClick should be called exactly once
-          expect(onClick).toHaveBeenCalledTimes(1);
-
-          // The skill object with details should be available for modal display
-          expect(skill.details).toBeDefined();
-          expect(skill.details.length).toBeGreaterThan(0);
-        }),
-        { numRuns: 100 }
-      );
-    });
-
-    it('SkillCard should trigger onClick on keyboard Enter/Space for any valid Skill', async () => {
-      /**
-       * Feature: portfolio-site, Property 5: Modal Displays Details on Click
-       * Validates: Requirements 6.5, 6.6, 6.7, 8.1, 8.2, 8.3
-       */
-      const user = userEvent.setup();
-
-      await fc.assert(
-        fc.asyncProperty(skillArb, async (skill) => {
-          cleanup();
-          const onClick = vi.fn();
-
-          render(<SkillCard skill={skill} onClick={onClick} />);
-
-          const card = screen.getByRole('button');
-          card.focus();
-
-          // Press Enter
-          await user.keyboard('{Enter}');
-          expect(onClick).toHaveBeenCalledTimes(1);
-
-          onClick.mockClear();
-
-          // Press Space
           await user.keyboard(' ');
           expect(onClick).toHaveBeenCalledTimes(1);
         }),

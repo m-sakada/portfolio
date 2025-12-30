@@ -123,3 +123,33 @@ body {
 .animate-wave {
   animation: wave 4s ease-in-out infinite;
 }
+
+/* Floating animation for skill tags */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--float-range, 10px) * -1));
+  }
+}
+
+.animate-float {
+  animation: float var(--float-duration, 3s) ease-in-out infinite;
+}
+
+/* Fade in animation for tooltips (below) */
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.15s ease-out;
+}
