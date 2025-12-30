@@ -97,7 +97,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 | url | URL | テキストフィールド | ✓ | - |
 | eyecatch | アイキャッチ画像 | 画像 | ✓ | - |
 | introductionUrl | 実績紹介URL | テキストフィールド | - | - |
-| category | 種別 | セレクトフィールド | ✓ | 保守運用, Webシステム構築, WordPressサイト構築, LP制作, 静的サイト構築 |
+| category | 種別 | セレクトフィールド | ✓ | 保守運用, Webシステム構築, WordPressサイト構築, LP制作, 静的サイト構築　など |
 | duration | 期間 | テキストフィールド | ✓ | - |
 | technologies | 技術 | 複数選択フィールド | ✓ | Next.js, TypeScript, microCMS, Vercel, AWS, WordPress, XServer, Kinsta, PHP, VanillaJS, Sass |
 | details | 詳細 | リッチエディタ | ✓ | - |
@@ -114,7 +114,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 | workExperiences | 経験業務 | 複数選択フィールド | ✓ | ※任意の業務内容を設定 |
 | duration | 期間 | テキストフィールド | ✓ | - |
 | url | URL | テキストフィールド | ✓ | - |
-| companyType | 会社タイプ | セレクトフィールド | ✓ | Web制作会社, 事業会社, フリーランス |
+| companyType | 会社タイプ | セレクトフィールド | ✓ | Web制作会社, 事業会社, フリーランス　など |
 | details | 詳細 | リッチエディタ | ✓ | - |
 
 #### Skills API
@@ -125,7 +125,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 |-------------|-------------|--------|------|--------|
 | name | 名称 | テキストフィールド | ✓ | - |
 | icon | アイコン | 画像 | ✓ | - |
-| category | カテゴリ | セレクトフィールド | ✓ | 言語, OS, ツール, インフラ |
+| category | カテゴリ | セレクトフィールド | ✓ | 言語, OS, ツール, インフラ　など |
 | yearsOfExperience | 経験年数 | テキストフィールド | ✓ | - |
 | details | 詳細 | リッチエディタ | ✓ | - |
 
