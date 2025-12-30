@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import * as fc from 'fast-check';
 import WorkCard from './WorkCard';
 import CareerItem from './CareerItem';
-import { Work, Career, WorkCategory, Technology, CompanyType } from '@/lib/types';
+import { Work, Career } from '@/lib/types';
 
 // Mock next/image
 vi.mock('next/image', () => ({
@@ -21,7 +21,7 @@ const microCMSImageArb = fc.record({
   height: fc.integer({ min: 1, max: 2000 }),
 });
 
-const workCategoryArb = fc.constantFrom<WorkCategory>(
+const workCategoryArb = fc.constantFrom(
   '保守運用',
   'Webシステム構築',
   'WordPressサイト構築',
@@ -29,7 +29,7 @@ const workCategoryArb = fc.constantFrom<WorkCategory>(
   '静的サイト構築'
 );
 
-const technologyArb = fc.constantFrom<Technology>(
+const technologyArb = fc.constantFrom(
   'Next.js',
   'TypeScript',
   'microCMS',
@@ -43,7 +43,7 @@ const technologyArb = fc.constantFrom<Technology>(
   'Sass'
 );
 
-const companyTypeArb = fc.constantFrom<CompanyType>(
+const companyTypeArb = fc.constantFrom(
   'Web制作会社',
   '事業会社',
   'フリーランス'
