@@ -2,7 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
 import * as fc from 'fast-check';
 import SkillsSection from './SkillsSection';
-import { Skill, SkillCategory } from '@/lib/types';
+import { Skill } from '@/lib/types';
 
 // Mock next/image
 vi.mock('next/image', () => ({
@@ -19,7 +19,7 @@ const microCMSImageArb = fc.record({
   height: fc.integer({ min: 1, max: 2000 }),
 });
 
-const skillCategoryArb = fc.constantFrom<SkillCategory>(
+const skillCategoryArb = fc.constantFrom(
   '言語',
   'OS',
   'ツール',

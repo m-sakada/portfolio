@@ -1,39 +1,16 @@
 // Type definitions for microCMS API responses
 
-// Work Category types
-export type WorkCategory = 
-  | '保守運用'
-  | 'Webシステム構築'
-  | 'WordPressサイト構築'
-  | 'LP制作'
-  | '静的サイト構築';
+// Work Category type (display only)
+export type WorkCategory = string;
 
-// Technology types
-export type Technology = 
-  | 'Next.js'
-  | 'TypeScript'
-  | 'microCMS'
-  | 'Vercel'
-  | 'AWS'
-  | 'WordPress'
-  | 'XServer'
-  | 'Kinsta'
-  | 'PHP'
-  | 'VanillaJS'
-  | 'Sass';
+// Technology type (display only)
+export type Technology = string;
 
-// Company Type
-export type CompanyType = 
-  | 'Web制作会社'
-  | '事業会社'
-  | 'フリーランス';
+// Company Type (display only)
+export type CompanyType = string;
 
-// Skill Category
-export type SkillCategory = 
-  | '言語'
-  | 'OS'
-  | 'ツール'
-  | 'インフラ';
+// Skill Category (display only)
+export type SkillCategory = string;
 
 // microCMS Image type
 export interface MicroCMSImage {

@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as fc from 'fast-check';
 import { getWorks, getCareer, getSkills } from './microcms';
 import { isWork, isCareer, isSkill } from './type-guards';
-import { Work, Career, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
 
 // Mock global fetch
 const mockFetch = vi.fn();
@@ -25,50 +24,15 @@ describe('microCMS Client Property Tests', () => {
       height: fc.integer({ min: 1, max: 2000 }),
     });
 
-    const workCategoryArb = fc.constantFrom<WorkCategory>(
-      '保守運用',
-      'Webシステム構築',
-      'WordPressサイト構築',
-      'LP制作',
-      '静的サイト構築'
-    );
-
-    const technologyArb = fc.constantFrom<Technology>(
-      'Next.js',
-      'TypeScript',
-      'microCMS',
-      'Vercel',
-      'AWS',
-      'WordPress',
-      'XServer',
-      'Kinsta',
-      'PHP',
-      'VanillaJS',
-      'Sass'
-    );
-
-    const companyTypeArb = fc.constantFrom<CompanyType>(
-      'Web制作会社',
-      '事業会社',
-      'フリーランス'
-    );
-
-    const skillCategoryArb = fc.constantFrom<SkillCategory>(
-      '言語',
-      'OS',
-      'ツール',
-      'インフラ'
-    );
-
     const workArb = fc.record({
       id: fc.uuid(),
       title: fc.string({ minLength: 1, maxLength: 100 }),
       url: fc.webUrl(),
       eyecatch: microCMSImageArb,
       introductionUrl: fc.webUrl(),
-      category: workCategoryArb,
+      category: fc.string({ minLength: 1, maxLength: 50 }),
       duration: fc.string({ minLength: 1, maxLength: 50 }),
-      technologies: fc.array(technologyArb, { minLength: 1, maxLength: 5 }),
+      technologies: fc.array(fc.string({ minLength: 1, maxLength: 30 }), { minLength: 1, maxLength: 5 }),
       details: fc.string({ minLength: 1, maxLength: 1000 }),
     });
 
@@ -80,7 +44,7 @@ describe('microCMS Client Property Tests', () => {
       workExperiences: fc.array(fc.string({ minLength: 1, maxLength: 100 }), { minLength: 1, maxLength: 5 }),
       duration: fc.string({ minLength: 1, maxLength: 50 }),
       url: fc.webUrl(),
-      companyType: companyTypeArb,
+      companyType: fc.string({ minLength: 1, maxLength: 30 }),
       details: fc.string({ minLength: 1, maxLength: 1000 }),
     });
 
@@ -88,7 +52,7 @@ describe('microCMS Client Property Tests', () => {
       id: fc.uuid(),
       name: fc.string({ minLength: 1, maxLength: 100 }),
       icon: microCMSImageArb,
-      category: skillCategoryArb,
+      category: fc.string({ minLength: 1, maxLength: 30 }),
       yearsOfExperience: fc.string({ minLength: 1, maxLength: 20 }),
       details: fc.string({ minLength: 1, maxLength: 1000 }),
     });

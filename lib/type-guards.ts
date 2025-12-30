@@ -1,113 +1,65 @@
-import { Work, Career, Skill, WorkCategory, Technology, CompanyType, SkillCategory } from './types';
+import { Work, Career, Skill } from './types';
 
 // Type guard for MicroCMSImage
-function isMicroCMSImage(obj: any): obj is { url: string; width: number; height: number } {
+function isMicroCMSImage(obj: unknown): obj is { url: string; width: number; height: number } {
   return (
     typeof obj === 'object' &&
     obj !== null &&
-    typeof obj.url === 'string' &&
-    typeof obj.width === 'number' &&
-    typeof obj.height === 'number'
+    'url' in obj &&
+    'width' in obj &&
+    'height' in obj &&
+    typeof (obj as { url: unknown }).url === 'string' &&
+    typeof (obj as { width: unknown }).width === 'number' &&
+    typeof (obj as { height: unknown }).height === 'number'
   );
 }
 
-// Type guard for WorkCategory
-function isWorkCategory(value: any): value is WorkCategory {
-  const validCategories: WorkCategory[] = [
-    '保守運用',
-    'Webシステム構築',
-    'WordPressサイト構築',
-    'LP制作',
-    '静的サイト構築'
-  ];
-  return validCategories.includes(value);
-}
-
-// Type guard for Technology
-function isTechnology(value: any): value is Technology {
-  const validTechnologies: Technology[] = [
-    'Next.js',
-    'TypeScript',
-    'microCMS',
-    'Vercel',
-    'AWS',
-    'WordPress',
-    'XServer',
-    'Kinsta',
-    'PHP',
-    'VanillaJS',
-    'Sass'
-  ];
-  return validTechnologies.includes(value);
-}
-
-// Type guard for CompanyType
-function isCompanyType(value: any): value is CompanyType {
-  const validTypes: CompanyType[] = [
-    'Web制作会社',
-    '事業会社',
-    'フリーランス'
-  ];
-  return validTypes.includes(value);
-}
-
-// Type guard for SkillCategory
-function isSkillCategory(value: any): value is SkillCategory {
-  const validCategories: SkillCategory[] = [
-    '言語',
-    'OS',
-    'ツール',
-    'インフラ'
-  ];
-  return validCategories.includes(value);
-}
-
 // Type guard for Work
-export function isWork(obj: any): obj is Work {
+export function isWork(obj: unknown): obj is Work {
+  if (typeof obj !== 'object' || obj === null) return false;
+  const o = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.id === 'string' &&
-    typeof obj.title === 'string' &&
-    typeof obj.url === 'string' &&
-    isMicroCMSImage(obj.eyecatch) &&
-    typeof obj.introductionUrl === 'string' &&
-    isWorkCategory(obj.category) &&
-    typeof obj.duration === 'string' &&
-    Array.isArray(obj.technologies) &&
-    obj.technologies.every(isTechnology) &&
-    typeof obj.details === 'string'
+    typeof o.id === 'string' &&
+    typeof o.title === 'string' &&
+    typeof o.url === 'string' &&
+    isMicroCMSImage(o.eyecatch) &&
+    typeof o.introductionUrl === 'string' &&
+    typeof o.category === 'string' &&
+    typeof o.duration === 'string' &&
+    Array.isArray(o.technologies) &&
+    o.technologies.every((t: unknown) => typeof t === 'string') &&
+    typeof o.details === 'string'
   );
 }
 
 // Type guard for Career
-export function isCareer(obj: any): obj is Career {
+export function isCareer(obj: unknown): obj is Career {
+  if (typeof obj !== 'object' || obj === null) return false;
+  const o = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.id === 'string' &&
-    typeof obj.companyName === 'string' &&
-    isMicroCMSImage(obj.companyLogo) &&
-    typeof obj.jobTitle === 'string' &&
-    Array.isArray(obj.workExperiences) &&
-    obj.workExperiences.every((exp: any) => typeof exp === 'string') &&
-    typeof obj.duration === 'string' &&
-    typeof obj.url === 'string' &&
-    isCompanyType(obj.companyType) &&
-    typeof obj.details === 'string'
+    typeof o.id === 'string' &&
+    typeof o.companyName === 'string' &&
+    isMicroCMSImage(o.companyLogo) &&
+    typeof o.jobTitle === 'string' &&
+    Array.isArray(o.workExperiences) &&
+    o.workExperiences.every((exp: unknown) => typeof exp === 'string') &&
+    typeof o.duration === 'string' &&
+    typeof o.url === 'string' &&
+    typeof o.companyType === 'string' &&
+    typeof o.details === 'string'
   );
 }
 
 // Type guard for Skill
-export function isSkill(obj: any): obj is Skill {
+export function isSkill(obj: unknown): obj is Skill {
+  if (typeof obj !== 'object' || obj === null) return false;
+  const o = obj as Record<string, unknown>;
   return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof obj.id === 'string' &&
-    typeof obj.name === 'string' &&
-    isMicroCMSImage(obj.icon) &&
-    isSkillCategory(obj.category) &&
-    typeof obj.yearsOfExperience === 'string' &&
-    typeof obj.details === 'string'
+    typeof o.id === 'string' &&
+    typeof o.name === 'string' &&
+    isMicroCMSImage(o.icon) &&
+    typeof o.category === 'string' &&
+    typeof o.yearsOfExperience === 'string' &&
+    typeof o.details === 'string'
   );
 }
