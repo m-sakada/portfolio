@@ -30,12 +30,13 @@ body {
    - Mobile: 320px+ (default)
    - Tablet: 768px+ (md)
    - Desktop: 1024px+ (lg)
+   Base font size: minimum 13px
    =================================== */
 
 /* Mobile base styles (320px+) */
 @media (min-width: 320px) {
   html {
-    font-size: 14px;
+    font-size: 15px;
   }
   
   .container-responsive {
@@ -47,7 +48,7 @@ body {
 /* Tablet styles (768px+) */
 @media (min-width: 768px) {
   html {
-    font-size: 15px;
+    font-size: 16px;
   }
   
   .container-responsive {
@@ -59,7 +60,7 @@ body {
 /* Desktop styles (1024px+) */
 @media (min-width: 1024px) {
   html {
-    font-size: 16px;
+    font-size: 17px;
   }
   
   .container-responsive {

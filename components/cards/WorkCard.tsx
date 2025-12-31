@@ -46,7 +46,7 @@ export default function WorkCard({ work, onClick }: WorkCardProps) {
           <span className="px-2 py-1 border border-gray-300 text-gray-800 rounded whitespace-nowrap">
             {work.category}
           </span>
-          <span className="whitespace-nowrap">{work.duration}</span>
+          <span className="whitespace-nowrap text-xs">{work.duration}</span>
         </div>
 
         {/* Technologies */}
