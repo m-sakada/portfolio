@@ -38,7 +38,7 @@ export const MicroCmsHtml = ({ html, className = '' }: MicroCmsHtmlProps) => {
 
   return (
     <div
-      className={className}
+      className={`microcms-html ${className}`}
       dangerouslySetInnerHTML={{ __html: sanitized }}
     />
   );

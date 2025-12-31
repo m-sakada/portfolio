@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Career } from '@/lib/types';
 import CareerItem from '@/components/cards/CareerItem';
 import Modal from '@/components/ui/Modal';
-import RichText from '@/components/ui/RichText';
+import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 interface CareerSectionProps {
   career: Career[];
@@ -80,7 +80,7 @@ export default function CareerSection({ career }: CareerSectionProps) {
                   </a>
                 </div>
               )}
-              <RichText content={selectedCareer.details} />
+              <MicroCmsHtml html={selectedCareer.details} />
             </div>
           )}
         </Modal>

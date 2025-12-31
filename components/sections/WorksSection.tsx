@@ -5,7 +5,7 @@ import { Work } from '@/lib/types';
 import WorkCard from '@/components/cards/WorkCard';
 import Carousel from '@/components/ui/Carousel';
 import Modal from '@/components/ui/Modal';
-import RichText from '@/components/ui/RichText';
+import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 interface WorksSectionProps {
   works: Work[];
@@ -70,7 +70,7 @@ export default function WorksSection({ works }: WorksSectionProps) {
                   </a>
                 </div>
               )}
-              <RichText content={selectedWork.details} />
+              <MicroCmsHtml html={selectedWork.details} />
             </div>
           )}
         </Modal>
