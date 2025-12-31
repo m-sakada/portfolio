@@ -59,7 +59,7 @@ export default function Introduction({ text, profileImage, name, nameEn, mvImage
                   </span>
                 )}
               </h1>
-              <p className="text-left text-gray-700 lexed whitespace-pre-line" style={{ fontSize: 'var(--text-sm)' }}>
+              <p className="text-left text-gray-700 lexed whitespace-pre-line">
                 {text || defaultText}
               </p>
             </div>
