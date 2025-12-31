@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Skill } from '@/lib/types';
-import RichText from '@/components/ui/RichText';
+import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 interface SkillsSectionProps {
   skills: Skill[];
@@ -96,7 +96,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
                   {/* Details */}
                   {skill.details && (
                     <div className="text-sm max-h-40 overflow-y-auto">
-                      <RichText content={skill.details} />
+                      <MicroCmsHtml html={skill.details} />
                     </div>
                   )}
                 </div>

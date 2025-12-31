@@ -29,10 +29,7 @@ export default async function AboutPage() {
         </h1>
 
         <div className="bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10">
-          <MicroCmsHtml 
-            html={settings.aboutContent}
-            className="prose prose-sm sm:prose-base md:prose-lg max-w-none"
-          />
+          <MicroCmsHtml html={settings.aboutContent} />
         </div>
       </div>
     </main>
