@@ -76,7 +76,7 @@ export default async function RootLayout({
         <main className="flex-1">
           {children}
         </main>
-        <Footer />
+        <Footer nameEn={settings?.nameEn} />
       </body>
       {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
