@@ -24,7 +24,7 @@ export default function CareerItem({ career, onClick }: CareerItemProps) {
       aria-label={`${career.companyName}の詳細を表示`}
     >
       {/* Company Logo */}
-      <div className="relative w-20 h-10 sm:w-34 sm:h-12 flex-shrink-0">
+      <div className="relative w-40 h-10 sm:w-34 sm:h-12 flex-shrink-0">
         <Image
           src={career.companyLogo.url}
           alt={`${career.companyName}のロゴ`}
