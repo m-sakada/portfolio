@@ -70,5 +70,6 @@ export interface Settings {
 
 // About interface (オブジェクト形式API)
 export interface About {
+  mvImage?: MicroCMSImage;          // MV画像
   content: string;                  // aboutページに表示するコンテンツ（リッチテキスト）
 }
