@@ -27,7 +27,7 @@ export default async function Home() {
       <CareerSection career={career} />
       <SkillsSection skills={skills} />
       {settings?.detailMessage && (
-        <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20 bg-white">
+        <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20 bg-white dark:bg-gray-300">
           <div className="max-w-4xl mx-auto">
             <MicroCmsHtml html={settings.detailMessage} />
           </div>

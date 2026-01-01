@@ -27,7 +27,7 @@ export default function CareerSection({ career }: CareerSectionProps) {
   }
 
   return (
-    <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20">
+    <section className="py-8 px-4 sm:py-12 md:py-16 lg:py-20 bg-white dark:bg-gray-900">
       <div className="max-w-4xl mx-auto">
         <h2 className="flex items-center justify-center gap-2 text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8">
           <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
