@@ -25,7 +25,6 @@ export interface Work {
   title: string;                    // タイトル
   url: string;                      // URL
   eyecatch: MicroCMSImage;          // アイキャッチ画像
-  introductionUrl: string;          // 実績紹介URL
   category: WorkCategory;           // 種別
   duration: string;                 // 期間
   technologies: Technology[];       // 技術（複数選択）
@@ -70,6 +69,7 @@ export interface Settings {
 
 // About interface (オブジェクト形式API)
 export interface About {
+  title?: string;                   // ページタイトル
   mvImage?: MicroCMSImage;          // MV画像
   content: string;                  // aboutページに表示するコンテンツ（リッチテキスト）
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import { NavLink } from '@/components/ui/Link';
 
 interface HeaderProps {
   showAbout?: boolean;
@@ -26,30 +26,24 @@ export default function Header({ showAbout = true, nameEn }: HeaderProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link 
+          <NavLink 
             href="/" 
-            className="text-xl font-bold text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors tracking-[.1em]"
+            className="text-xl font-bold text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 tracking-[.1em]"
             onClick={closeMenu}
           >
             {siteTitle}
-          </Link>
+          </NavLink>
 
           {showAbout && (
             <>
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center space-x-8">
-                <Link 
-                  href="/" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold tracking-[.1em]"
-                >
+                <NavLink href="/" className="font-bold tracking-[.1em]">
                   TOP
-                </Link>
-                <Link 
-                  href="/about" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold tracking-[.1em]"
-                >
+                </NavLink>
+                <NavLink href="/about" className="font-bold tracking-[.1em]">
                   About
-                </Link>
+                </NavLink>
               </nav>
 
               {/* Mobile Menu Button */}
@@ -78,20 +72,12 @@ export default function Header({ showAbout = true, nameEn }: HeaderProps) {
         {showAbout && isMenuOpen && (
           <nav className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex flex-col space-y-4">
-              <Link 
-                href="/" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1 tracking-[.1em]"
-                onClick={closeMenu}
-              >
+              <NavLink href="/" className="font-bold px-2 py-1 tracking-[.1em]" onClick={closeMenu}>
                 TOP
-              </Link>
-              <Link 
-                href="/about" 
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-bold px-2 py-1 tracking-[.1em]"
-                onClick={closeMenu}
-              >
+              </NavLink>
+              <NavLink href="/about" className="font-bold px-2 py-1 tracking-[.1em]" onClick={closeMenu}>
                 About
-              </Link>
+              </NavLink>
             </div>
           </nav>
         )}

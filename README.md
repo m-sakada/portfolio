@@ -89,6 +89,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 | フィールドID | フィールド名 | タイプ | 必須 | 説明 |
 |-------------|-------------|--------|------|------|
+| title | タイトル | テキストフィールド | - | ページのH1タイトル（未設定時は「About」） |
 | mvImage | MV画像 | 画像 | - | Aboutページのメインビジュアル |
 | content | コンテンツ | リッチエディタ | ✓ | Aboutページに表示するコンテンツ |
 
@@ -101,7 +102,6 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 | title | タイトル | テキストフィールド | ✓ | - |
 | url | URL | テキストフィールド | ✓ | - |
 | eyecatch | アイキャッチ画像 | 画像 | ✓ | - |
-| introductionUrl | 実績紹介URL | テキストフィールド | - | - |
 | category | 種別 | セレクトフィールド | ✓ | 保守運用, Webシステム構築, WordPressサイト構築, LP制作, 静的サイト構築　など |
 | duration | 期間 | テキストフィールド | ✓ | - |
 | technologies | 技術 | 複数選択フィールド | ✓ | Next.js, TypeScript, microCMS, Vercel, AWS, WordPress, XServer, Kinsta, PHP, VanillaJS, Sass |
