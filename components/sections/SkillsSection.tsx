@@ -73,14 +73,14 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
   }
 
   return (
-    <section className="relative pb-0 pt-8 px-4 sm:pt-12 md:pt-16 lg:pt-20 bg-gray-100">
+    <section className="relative pb-0 pt-8 px-4 sm:pt-12 md:pt-16 lg:pt-20 bg-gray-100 dark:bg-gray-700">
       <div className="max-w-4xl mx-auto pb-8 sm:pb-12 md:pb-16 lg:pb-20">
-        <h2 className="flex items-center justify-center gap-2 text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8">
-          <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 className="flex items-center justify-center gap-2 text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8">
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
           <span className="tracking-[.1em]">Skills</span>
-          <span className="text-sm sm:text-base font-normal text-muted-gray-text translate-y-[2px]">- スキル -</span>
+          <span className="text-sm sm:text-base font-normal text-gray-600 dark:text-gray-300 translate-y-[2px]">- スキル -</span>
         </h2>
 
         {/* Floating tag cloud */}
@@ -201,8 +201,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
           preserveAspectRatio="none"
         >
           <path
-            className="animate-wave"
-            fill="#ffffff"
+            className="animate-wave fill-white dark:fill-gray-300"
             d="M0,60 C150,120 350,0 600,60 C850,120 1050,0 1200,60 L1200,120 L0,120 Z"
           />
         </svg>

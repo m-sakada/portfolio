@@ -105,17 +105,17 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
     >
       <div
         ref={modalRef}
-        className="relative w-full sm:max-w-2xl max-h-[80vh] sm:max-h-[90vh] bg-white rounded-xl sm:rounded-lg shadow-xl flex flex-col"
+        className="relative w-full sm:max-w-2xl max-h-[80vh] sm:max-h-[90vh] bg-white dark:bg-gray-100 rounded-xl sm:rounded-lg shadow-xl flex flex-col"
         tabIndex={-1}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-400 flex-shrink-0">
           <h2 id="modal-title" className="text-lg sm:text-xl font-semibold text-gray-900 pr-8 line-clamp-2">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 sm:top-5 sm:right-5 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-200 rounded-full transition-colors"
             aria-label="モーダルを閉じる"
           >
             <svg
