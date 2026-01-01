@@ -7,7 +7,8 @@ const API_PATH_MAP: Record<string, string[]> = {
   works: ['/'],
   career: ['/'],
   skills: ['/'],
-  settings: ['/', '/about'],
+  settings: ['/'],
+  about: ['/about'],
 };
 
 /**
@@ -26,7 +27,7 @@ function verifySignature(body: string, signature: string, secret: string): boole
 
 /**
  * microCMS Webhook handler for On-Demand ISR
- * 4つのAPI（works, experiences, skills, settings）の更新時にrevalidate
+ * 各APIの更新時にrevalidate
  */
 export async function POST(request: NextRequest) {
   try {

@@ -65,7 +65,7 @@ export default async function RootLayout({
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const settings = await getSettings();
-  const showAbout = !!settings?.aboutContent;
+  const showAbout = !!settings?.showAboutMenu;
 
   return (
     <html lang="ja">
