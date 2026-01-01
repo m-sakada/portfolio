@@ -20,7 +20,7 @@ export default async function AboutPage() {
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-gray-50">
       {/* MV Image - Full width background */}
       {about.mvImage && (
         <div className="relative w-full h-40 sm:h-48 md:h-56 lg:h-64">
@@ -35,17 +35,17 @@ export default async function AboutPage() {
         </div>
       )}
 
-      <div className="py-12 px-4 md:py-16 lg:py-20">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 text-center">
-            About
+      <div className={`px-4 relative z-10 ${about.mvImage ? '-mt-8 sm:-mt-10 md:-mt-12' : 'pt-12 md:pt-16 lg:pt-20'}`}>
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10">
+          <h1 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+            {about.title || 'About'}
           </h1>
 
-          <div className="bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10">
-            <MicroCmsHtml html={about.content} />
-          </div>
+          <MicroCmsHtml html={about.content} />
         </div>
       </div>
+
+      <div className="pb-12 md:pb-16 lg:pb-20" />
     </main>
   );
 }

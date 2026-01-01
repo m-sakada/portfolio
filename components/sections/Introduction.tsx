@@ -51,7 +51,7 @@ export default function Introduction({ text, profileImage, name, nameEn, mvImage
             
             {/* Name and Introduction */}
             <div className={profileImage ? 'text-center sm:text-left' : 'text-center w-full'}>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-xl sm:text-2xl md:text-2xl font-bold text-gray-900 mb-2">
                 {displayName}
                 {nameEn && (
                   <span className="block text-base sm:text-lg md:text-xl text-gray-700 mt-1 tracking-[.1em]">
