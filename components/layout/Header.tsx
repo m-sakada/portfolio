@@ -22,7 +22,7 @@ export default function Header({ showAbout = true, nameEn }: HeaderProps) {
   const siteTitle = nameEn ? `${nameEn}'s Portfolio` : 'Portfolio';
 
   return (
-    <header className="sticky top-0 z-1000 bg-white/80 backdrop-blur-md border-b border-gray-200 dark:bg-gray-900/80 dark:border-gray-700">
+    <header className="sticky top-0 z-1000 bg-white/90 backdrop-blur-md border-b border-gray-200 dark:bg-gray-800/90 dark:border-gray-700">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
