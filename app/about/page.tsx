@@ -1,23 +1,20 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getSettings } from '@/lib/microcms';
+import { getAbout } from '@/lib/microcms';
 import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getSettings();
-  const name = settings?.name || "Portfolio Owner";
-  
   return {
-    title: `About | ${name}`,
+    title: 'About',
     description: 'プライベート紹介ページ',
   };
 }
 
 export default async function AboutPage() {
-  const settings = await getSettings();
+  const about = await getAbout();
   
-  // aboutContentがない場合は404
-  if (!settings?.aboutContent) {
+  // aboutコンテンツがない場合は404
+  if (!about?.content) {
     notFound();
   }
 
@@ -29,7 +26,7 @@ export default async function AboutPage() {
         </h1>
 
         <div className="bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10">
-          <MicroCmsHtml html={settings.aboutContent} />
+          <MicroCmsHtml html={about.content} />
         </div>
       </div>
     </main>

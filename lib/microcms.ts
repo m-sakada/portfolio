@@ -1,4 +1,4 @@
-import { Work, Career, Skill, Settings } from './types';
+import { Work, Career, Skill, Settings, About } from './types';
 
 const serviceDomain = process.env.MICROCMS_SERVICE_DOMAIN!;
 const apiKey = process.env.MICROCMS_API_KEY!;
@@ -79,6 +79,19 @@ export async function getSettings(): Promise<Settings | null> {
     return await fetchFromMicroCMS<Settings>('settings', true);
   } catch (error) {
     console.error('Failed to fetch settings:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch about content from microCMS
+ * Returns null on error for graceful fallback
+ */
+export async function getAbout(): Promise<About | null> {
+  try {
+    return await fetchFromMicroCMS<About>('about', true);
+  } catch (error) {
+    console.error('Failed to fetch about:', error);
     return null;
   }
 }

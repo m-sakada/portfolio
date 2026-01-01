@@ -65,5 +65,9 @@ export interface Settings {
   nameEn?: string;                  // 名前（英字）
   introductionMessage?: string;     // 自己紹介メッセージ
   detailMessage?: string;           // 詳細メッセージ（リッチテキスト）
-  aboutContent?: string;            // aboutページに表示するコンテンツ（リッチテキスト）
+}
+
+// About interface (オブジェクト形式API)
+export interface About {
+  content: string;                  // aboutページに表示するコンテンツ（リッチテキスト）
 }
