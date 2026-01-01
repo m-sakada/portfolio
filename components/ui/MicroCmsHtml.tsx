@@ -26,7 +26,7 @@ export const MicroCmsHtml = ({ html, className = '' }: MicroCmsHtmlProps) => {
           'img', 'figure', 'figcaption',
           'div', 'span',
         ],
-        ALLOWED_ATTR: ['href', 'target', 'rel', 'src', 'alt', 'width', 'height', 'class'],
+        ALLOWED_ATTR: ['href', 'target', 'rel', 'src', 'alt', 'width', 'height', 'class', 'style'],
         ALLOW_DATA_ATTR: false,
       }));
     });
