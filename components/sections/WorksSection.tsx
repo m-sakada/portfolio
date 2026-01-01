@@ -6,7 +6,7 @@ import WorkCard from '@/components/cards/WorkCard';
 import Carousel from '@/components/ui/Carousel';
 import Modal from '@/components/ui/Modal';
 import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
-import { ExternalLink } from '@/components/ui/Link';
+import { TextLink } from '@/components/ui/Link';
 
 interface WorksSectionProps {
   works: Work[];
@@ -58,9 +58,9 @@ export default function WorksSection({ works }: WorksSectionProps) {
               {/* Site URL */}
               {selectedWork.url && (
                 <div className="mb-4 pb-4 border-b border-muted-border">
-                  <ExternalLink href={selectedWork.url}>
+                  <TextLink href={selectedWork.url} external>
                     {selectedWork.url}
-                  </ExternalLink>
+                  </TextLink>
                 </div>
               )}
               <MicroCmsHtml html={selectedWork.details} />

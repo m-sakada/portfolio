@@ -5,7 +5,7 @@ import { Career } from '@/lib/types';
 import CareerItem from '@/components/cards/CareerItem';
 import Modal from '@/components/ui/Modal';
 import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
-import { ExternalLink } from '@/components/ui/Link';
+import { TextLink } from '@/components/ui/Link';
 
 interface CareerSectionProps {
   career: Career[];
@@ -58,9 +58,9 @@ export default function CareerSection({ career }: CareerSectionProps) {
               {/* Company URL Link */}
               {selectedCareer.url && (
                 <div className="mb-4 pb-4 border-b border-muted-border">
-                  <ExternalLink href={selectedCareer.url} className="text-sm">
+                  <TextLink href={selectedCareer.url} external className="text-sm">
                     {selectedCareer.url}
-                  </ExternalLink>
+                  </TextLink>
                 </div>
               )}
               <MicroCmsHtml html={selectedCareer.details} />
