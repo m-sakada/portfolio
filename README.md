@@ -71,21 +71,26 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 | nameEn | 名前（英字） | テキストフィールド | - | 自己紹介セクション|
 | introductionMessage | 自己紹介メッセージ | テキストエリア | - | 自己紹介セクション |
 | detailMessage | 詳細メッセージ | リッチエディタ | - | TOPページのスキルセクション下の詳細エリア |
-| aboutContent | aboutページコンテンツ | リッチエディタ | - | Aboutページ用 |
+| showAboutMenu | Aboutメニュー表示 | 真偽値 | - | ヘッダーメニューにAboutリンクを表示するか |
 
 **設定値の使用箇所:**
-- `name`: サイトタイトル「{名前} | ポートフォリオサイト」、メタデータ
-- `nameEn`: TOPページの自己紹介セクションで名前の下に併記
+- `name`: サイトタイトル「{名前} | ポートフォリオサイト」、タイトル、description
+- `nameEn`: TOPページの自己紹介セクション、コピーライト
 - `mvImage`: OGP画像（Twitter Card、Facebook等のシェア時に表示）
 - `favicon`: ブラウザタブのアイコン
 - `profileImage`: TOPページの自己紹介セクションの顔写真
 - `introductionMessage`: TOPページの自己紹介文
 - `detailMessage`: TOPページのスキルセクション下の詳細エリア（リッチテキスト）
-- `aboutContent`: Aboutページのコンテンツ全体
+- `showAboutMenu`: ヘッダーメニューにAboutリンクを表示するかどうか
 
-**メタデータ:**
-- Title: `{名前} | ポートフォリオサイト`
-- Description: `{現在の年}年現在の{名前}のポートフォリオサイトです。経験サイト、経歴、スキルを記載しています。`
+#### About API
+- API名: `about`
+- 形式: オブジェクト形式
+
+| フィールドID | フィールド名 | タイプ | 必須 | 説明 |
+|-------------|-------------|--------|------|------|
+| mvImage | MV画像 | 画像 | - | Aboutページのメインビジュアル |
+| content | コンテンツ | リッチエディタ | ✓ | Aboutページに表示するコンテンツ |
 
 #### Works API
 - API名: `works`
@@ -200,7 +205,7 @@ GET https://your-domain/api/revalidate
 {
   "status": "ok",
   "message": "Revalidate webhook endpoint is ready",
-  "supportedApis": ["works", "career", "skills", "settings"]
+  "supportedApis": ["works", "career", "skills", "settings", "about"]
 }
 ```
 
@@ -208,8 +213,8 @@ GET https://your-domain/api/revalidate
 
 | API | revalidate対象 |
 |-----|---------------|
-| works, career, skills | `/` |
-| settings | `/`, `/about` |
+| works, career, skills, settings | `/` |
+| about | `/about` |
 
 ## 技術スタック
 
