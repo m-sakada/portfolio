@@ -289,6 +289,22 @@ body {
     margin: 1em 0;
   }
 
+  & figure {
+    margin: 1.5em 0;
+  }
+
+  & figcaption {
+    font-size: 0.75em;
+    color: #6b7280;
+    text-align: left;
+  }
+
+  & hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 2.8em 0;
+  }
+
   & table {
     width: 100%;
     border-collapse: collapse;
@@ -297,13 +313,36 @@ body {
 
   & th,
   & td {
-    border: 1px solid #e5e7eb;
     padding: 0.5em;
     text-align: left;
   }
 
   & th {
-    background-color: #f9fafb;
     font-weight: 600;
+  }
+
+  /* スマホでテーブルを1列表示 */
+  @media (max-width: 639px) {
+    & table,
+    & thead,
+    & tbody,
+    & tr,
+    & th,
+    & td {
+      display: block;
+      width: 100%;
+    }
+
+    & thead {
+      display: none;
+    }
+
+    & tr {
+      margin-bottom: 1em;
+    }
+
+    & td {
+      padding: 0.25em 0;
+    }
   }
 }
