@@ -37,7 +37,7 @@ export default async function AboutPage() {
 
       <div className={`px-4 relative z-10 ${about.mvImage ? '-mt-8 sm:-mt-10 md:-mt-12' : 'pt-12 md:pt-16 lg:pt-20'}`}>
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10">
-          <h1 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-12 text-center">
             {about.title || 'About'}
           </h1>
 
