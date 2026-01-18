@@ -52,8 +52,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: settings?.mvImage?.url ? [settings.mvImage.url] : undefined,
     },
     robots: {
-      index: true,
-      follow: true,
+      index: !settings?.noindex,
+      follow: !settings?.noindex,
     },
   };
 }

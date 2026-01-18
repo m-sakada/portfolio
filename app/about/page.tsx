@@ -1,13 +1,19 @@
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getAbout } from '@/lib/microcms';
+import { getAbout, getSettings } from '@/lib/microcms';
 import { MicroCmsHtml } from '@/components/ui/MicroCmsHtml';
 
 export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  
   return {
     title: 'About',
     description: 'プライベート紹介ページ',
+    robots: {
+      index: !settings?.noindex,
+      follow: !settings?.noindex,
+    },
   };
 }
 

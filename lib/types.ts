@@ -65,6 +65,7 @@ export interface Settings {
   introductionMessage?: string;     // 自己紹介メッセージ
   detailMessage?: string;           // 詳細メッセージ（リッチテキスト）
   showAboutMenu?: boolean;          // ヘッダーメニューにAboutを表示
+  noindex?: boolean;                // 検索エンジンのインデックスを拒否
 }
 
 // About interface (オブジェクト形式API)
