@@ -15,9 +15,9 @@
     "dompurify": "^3.3.1",
     "keen-slider": "^6.8.6",
     "microcms-js-sdk": "^3.2.0",
-    "next": "16.0.10",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "next": "16.1.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -31,7 +31,7 @@
     "@vitest/ui": "^4.0.16",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.0.10",
+    "eslint-config-next": "16.1.6",
     "fast-check": "^4.5.2",
     "jsdom": "^27.4.0",
     "tailwindcss": "^4",
